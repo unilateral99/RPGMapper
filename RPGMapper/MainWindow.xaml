@@ -8,27 +8,44 @@
         WindowStartupLocation="CenterScreen"
         Title="MainWindow" Height="800" Width="800">
     <Grid>
-        <DockPanel>
-            <ToolBarTray DockPanel.Dock="Top" IsLocked="True">
-                <ToolBar>
-                    <Button Content="Novo"/>
-                    <Button Content="Abrir"/>
-                    <Button Content="Salvar"/>
-                    <Separator/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
-                    <Label Content="Tamanho: "/>
-                    <TextBox Name="txtBox_Largura" Text="100" Width="40" ToolTip="Largura em Tiles"/>
-                    <Label Content="x"/>
-                    <TextBox Name="txtBox_Altura" Text="100" Width="40" ToolTip="Altura em Tiles"/>
-                </ToolBar>
-            </ToolBarTray>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
 
-            <ToolBarTray DockPanel.Dock="Right" Orientation="Vertical" IsLocked="True">
-                <ToolBar>
-                    <Button Content="Teste"/>
-                </ToolBar>
-            </ToolBarTray>
+        <ToolBarTray Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" IsLocked="True" Background="AntiqueWhite">
+            <ToolBar Background="AntiqueWhite">
+                <Button Content="Novo" Background="AntiqueWhite"/>
+                <Button Content="Abrir" Background="AntiqueWhite"/>
+                <Button Content="Salvar" Background="AntiqueWhite"/>
+                <Separator/>
 
-        </DockPanel>
+                <Label Content="Tamanho: " Background="AntiqueWhite"/>
+                <TextBox Name="txtBox_Largura" Text="50" Width="40" ToolTip="Largura em Tiles"/>
+                <Label Content="x" Background="AntiqueWhite"/>
+                <TextBox Name="txtBox_Altura" Text="50" Width="40" ToolTip="Altura em Tiles"/>
+            </ToolBar>
+        </ToolBarTray>
+
+        <ToolBarTray Grid.Column="1" Grid.Row="1" Orientation="Vertical" IsLocked="True" Background="AntiqueWhite">
+            <ToolBar Background="AntiqueWhite">
+                <TextBlock Text="Adicionar:" Margin="0,0,0,10" Background="AntiqueWhite"/>
+                <Button Content="Inimigo" Background="AntiqueWhite"/>
+                <Button Content="Evento" Background="AntiqueWhite"/>
+                <Button Content="Jogador" Background="AntiqueWhite"/>
+                <Button Content="Nota" Background="AntiqueWhite"/>
+            </ToolBar>
+        </ToolBarTray>
+
+        <ScrollViewer Grid.Column="0" Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+            <StackPanel Width="1000" Height="1000">
+                <Image Source="C:\Users\User\Documents\Projeto\RPGMapper\Imagens\shopping.jpg"/>
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </Window>
