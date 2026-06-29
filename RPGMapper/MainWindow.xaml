@@ -6,11 +6,18 @@
         xmlns:local="clr-namespace:RPGMapper"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="MainWindow" Height="800" Width="800">
-    <Grid>
+        Title="MainWindow" Height="800" Width="800"
+        xmlns:conv="clr-namespace:RPGMapper.Conversores">
+
+    <Window.Resources>
+        <conv:ZoomPercentageConverter x:Key="ZoomConverter"/>
+    </Window.Resources>
+
+    <Grid Background="Black">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
@@ -19,16 +26,20 @@
         </Grid.ColumnDefinitions>
 
         <ToolBarTray Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" IsLocked="True" Background="AntiqueWhite">
-            <ToolBar Background="AntiqueWhite">
+            <ToolBar Background="AntiqueWhite" Width="800">
                 <Button Content="Novo" Background="AntiqueWhite"/>
                 <Button Content="Abrir" Background="AntiqueWhite"/>
                 <Button Content="Salvar" Background="AntiqueWhite"/>
                 <Separator/>
 
                 <Label Content="Tamanho: " Background="AntiqueWhite"/>
-                <TextBox Name="txtBox_Largura" Text="50" Width="40" ToolTip="Largura em Tiles"/>
+                <TextBox Name="txtBox_Largura" Text="{Binding Largura, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Width="40" ToolTip="Largura em Tiles"/>
                 <Label Content="x" Background="AntiqueWhite"/>
-                <TextBox Name="txtBox_Altura" Text="50" Width="40" ToolTip="Altura em Tiles"/>
+                <TextBox Name="txtBox_Altura" Text="{Binding Altura, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Width="40" ToolTip="Altura em Tiles"/>
+                <Separator/>
+
+                <CheckBox Height="10" Width="10" Margin="2,2,2,2"/>
+                <Label Content="Agrupar Jogadores"/>
             </ToolBar>
         </ToolBarTray>
 
@@ -39,13 +50,43 @@
                 <Button Content="Evento" Background="AntiqueWhite"/>
                 <Button Content="Jogador" Background="AntiqueWhite"/>
                 <Button Content="Nota" Background="AntiqueWhite"/>
+                <Button Content="Transição" Background="AntiqueWhite"/>
             </ToolBar>
         </ToolBarTray>
 
-        <ScrollViewer Grid.Column="0" Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-            <StackPanel Width="1000" Height="1000">
-                <Image Source="C:\Users\User\Documents\Projeto\RPGMapper\Imagens\shopping.jpg"/>
-            </StackPanel>
+        <StatusBar Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2">
+            <StatusBarItem>
+                <Label Content="Zoom: "/>
+            </StatusBarItem>
+            <StatusBarItem>
+                <Slider Name="Slider_Zoom" Minimum="0.5" Maximum="2.5" Width="100" TickPlacement="BottomRight" TickFrequency="0.1" IsSnapToTickEnabled="True" Value="{Binding Zoom, Mode=TwoWay}" ToolTip="{Binding ElementName=Slider_Zoom, Path=Value, Converter={StaticResource ZoomConverter}}"/>
+            </StatusBarItem>
+            <StatusBarItem>
+                <TextBox Text="{Binding ElementName=Slider_Zoom, Path=Value, UpdateSourceTrigger=LostFocus, Converter={StaticResource ZoomConverter}, Mode=TwoWay}" Width="50"/>
+            </StatusBarItem>
+        </StatusBar>
+
+        <ScrollViewer PreviewMouseWheel="PreviewMouseWheel_ScrollViewer" Grid.Column="0" Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+            <Grid Width="{Binding LarguraGrade}" Height="{Binding AlturaGrade}">
+
+                <Image Source="C:\Users\User\Documents\Projeto\RPGMapper\Imagens\shopping.jpg" Stretch="Fill"/>
+
+                <ItemsControl Name="gradeIC">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UniformGrid Name="uniformGrid_main" Columns="{Binding Largura}" Rows="{Binding Altura}"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Border BorderBrush="Black" BorderThickness="0.20"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </Grid>
         </ScrollViewer>
     </Grid>
 </Window>

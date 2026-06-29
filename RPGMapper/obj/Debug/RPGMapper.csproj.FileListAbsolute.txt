@@ -13,3 +13,4 @@ C:\Users\User\Documents\Projeto\RPGMapper\obj\Debug\RPGMapper.csproj.GenerateRes
 C:\Users\User\Documents\Projeto\RPGMapper\obj\Debug\RPGMapper.csproj.CoreCompileInputs.cache
 C:\Users\User\Documents\Projeto\RPGMapper\obj\Debug\RPGMapper.exe
 C:\Users\User\Documents\Projeto\RPGMapper\obj\Debug\RPGMapper.pdb
+C:\Users\User\Documents\Projeto\RPGMapper\obj\Debug\GeneratedInternalTypeHelper.g.cs
