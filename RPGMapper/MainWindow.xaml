@@ -69,7 +69,8 @@
         <ScrollViewer PreviewMouseWheel="PreviewMouseWheel_ScrollViewer" Grid.Column="0" Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
             <Grid Width="{Binding LarguraGrade}" Height="{Binding AlturaGrade}">
 
-                <Image Source="C:\Users\User\Documents\Projeto\RPGMapper\Imagens\shopping.jpg" Stretch="Fill"/>
+                <Button Click="ImageButton_Click" Content="Abrir imagem" Width="100" Height="30"/>
+                <Image Source="{Binding Imagem}" Stretch="Fill"/>
 
                 <ItemsControl Name="gradeIC">
                     <ItemsControl.ItemsPanel>

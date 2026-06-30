@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -27,12 +28,6 @@ namespace RPGMapper
         public MainWindow()
         {
             InitializeComponent();
-
-            grade = new Grade();
-
-            gradeIC.ItemsSource = grade.Tiles;
-            
-            this.DataContext = grade;
         }
 
         public void PreviewMouseWheel_ScrollViewer(object sender, MouseWheelEventArgs e)
@@ -47,6 +42,36 @@ namespace RPGMapper
                 else if (e.Delta < 0)
                 {
                     grade.Zoom -= 0.1;
+                }
+            }
+        }
+
+        private void ImageButton_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Arquivos de Imagem (*.png, *.jpg)|*.png;*.jpg|Todos os arquivos (*.*)|*.*";
+            openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                if (grade != null)
+                {
+                    MessageBoxResult confirmacao = MessageBox.Show("Descartar mapa atual?", "Novo arquivo", MessageBoxButton.YesNo);
+                    switch (confirmacao)
+                    {
+                        case MessageBoxResult.Yes:
+                            break;
+                        case MessageBoxResult.No:
+                            return;
+                    }
+                }
+                else
+                {
+                    grade = new Grade(50, 50, openFileDialog.FileName);
+
+                    gradeIC.ItemsSource = grade.Tiles;
+
+                    this.DataContext = grade;
                 }
             }
         }

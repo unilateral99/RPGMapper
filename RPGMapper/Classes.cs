@@ -32,6 +32,9 @@ namespace RPGMapper
         double _larguraGrade { get; set; }
         double _zoom { get; set; }
 
+        string _nome { get; set; }
+        string _imagem { get; set; }
+
         public ObservableCollection<Tile> Tiles;
 
 
@@ -92,10 +95,21 @@ namespace RPGMapper
             }
         }
 
-        public Grade()
+        public string Imagem
         {
-            _altura = 50;
-            _largura = 50;
+            get => _imagem;
+            set
+            {
+                _imagem = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public Grade(int altura, int largura, string imagem)
+        {
+            _altura = altura;
+            _largura = largura;
+            _imagem = imagem;
             _zoom = 1.0;
 
             Tiles = new ObservableCollection<Tile>();
