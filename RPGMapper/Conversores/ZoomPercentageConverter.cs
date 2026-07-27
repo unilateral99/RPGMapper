@@ -11,7 +11,11 @@ namespace RPGMapper.Conversores
     {
         public object Convert(object value, Type tagertType, object parameter, System.Globalization.CultureInfo culture)
         {
-            return (double) value * 100;
+            if (value != null)
+            {
+                return (double)value * 100 + "%";
+            }
+            return null;
         }
 
         public object ConvertBack(object value, Type tagertType, object paramenter, System.Globalization.CultureInfo culture)

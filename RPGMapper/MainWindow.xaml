@@ -9,11 +9,16 @@
         Title="MainWindow" Height="800" Width="800"
         xmlns:conv="clr-namespace:RPGMapper.Conversores">
 
+    <Window.CommandBindings>
+        <CommandBinding Command="ApplicationCommands.New" Executed="Novo_Executed" CanExecute="Novo_CanExecute"/>
+        <CommandBinding Command="local:MyCommands.Inimigo" Executed="Inimigo_Executed" CanExecute="Inimigo_CanExecute"/>
+    </Window.CommandBindings>
+    
     <Window.Resources>
         <conv:ZoomPercentageConverter x:Key="ZoomConverter"/>
     </Window.Resources>
 
-    <Grid Background="Black">
+    <Grid x:Name="MainGrid" Background="Black">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -26,8 +31,8 @@
         </Grid.ColumnDefinitions>
 
         <ToolBarTray Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" IsLocked="True" Background="AntiqueWhite">
-            <ToolBar Background="AntiqueWhite" Width="800">
-                <Button Content="Novo" Background="AntiqueWhite"/>
+            <ToolBar Background="AntiqueWhite">
+                <Button Command="ApplicationCommands.New" Content="Novo" Background="AntiqueWhite"/>
                 <Button Content="Abrir" Background="AntiqueWhite"/>
                 <Button Content="Salvar" Background="AntiqueWhite"/>
                 <Separator/>
@@ -46,9 +51,10 @@
         <ToolBarTray Grid.Column="1" Grid.Row="1" Orientation="Vertical" IsLocked="True" Background="AntiqueWhite">
             <ToolBar Background="AntiqueWhite">
                 <TextBlock Text="Adicionar:" Margin="0,0,0,10" Background="AntiqueWhite"/>
-                <Button Content="Inimigo" Background="AntiqueWhite"/>
-                <Button Content="Evento" Background="AntiqueWhite"/>
+                <Button Content="Inimigo" Command="local:MyCommands.Inimigo" Background="AntiqueWhite"/>
                 <Button Content="Jogador" Background="AntiqueWhite"/>
+                <Button Content="NPC" Background="AntiqueWhite"/>
+                <Button Content="Evento" Background="AntiqueWhite"/>
                 <Button Content="Nota" Background="AntiqueWhite"/>
                 <Button Content="Transição" Background="AntiqueWhite"/>
             </ToolBar>
@@ -67,9 +73,9 @@
         </StatusBar>
 
         <ScrollViewer PreviewMouseWheel="PreviewMouseWheel_ScrollViewer" Grid.Column="0" Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-            <Grid Width="{Binding LarguraGrade}" Height="{Binding AlturaGrade}">
+            <Grid x:Name="GradeGrid" Width="{Binding LarguraGrade}" Height="{Binding AlturaGrade}">
 
-                <Button Click="ImageButton_Click" Content="Abrir imagem" Width="100" Height="30"/>
+                <Button Command="ApplicationCommands.New" Content="Abrir imagem" Width="100" Height="30"/>
                 <Image Source="{Binding Imagem}" Stretch="Fill"/>
 
                 <ItemsControl Name="gradeIC">
@@ -81,7 +87,9 @@
 
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Grid>
+                            <Grid MouseDown="Tile_Click">
+                                <TextBlock/>
+                                <Image Name="EntidadeImagem" MouseMove="EntidadeImagem_MouseMove" MouseUp="EntidadeImagem_MouseUp"  DataContext="{Binding Entidade}" Source="{Binding Imagem}"/>
                                 <Border BorderBrush="Black" BorderThickness="0.20"/>
                             </Grid>
                         </DataTemplate>
