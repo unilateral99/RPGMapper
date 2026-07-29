@@ -40,6 +40,18 @@ namespace RPGMapper
                 }
             }
         }
+        public string Nome
+        {
+            get { return _nome; }
+            set
+            {
+                if (_nome != value)
+                {
+                    _nome = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
         
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -54,6 +66,18 @@ namespace RPGMapper
     {
         internal int _iniciativa { get; set; }
         internal int _vida { get; set; }
+
+        public int Vida
+        {
+            get
+            {
+                return _vida;
+            }
+            set
+            {
+                _vida = value;
+            }
+        }
 
         public Inimigo()
         {

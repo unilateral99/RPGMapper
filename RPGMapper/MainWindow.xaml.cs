@@ -25,17 +25,20 @@ namespace RPGMapper
     {
         internal Grade grade;
         internal Entidades temp;
-        internal ObservableCollection<Entidades> ListaEntidades;
         internal AdornerLayer layer;
         internal AdornerArrastar adorner;
         internal Image imagemArrastar;
         internal Tile tileOrigem;
         internal Tile tileDestino;
 
+        // Listas para as diversas entidades
+        internal ObservableCollection<Inimigo> Inimigos;
+
         public MainWindow()
         {
             InitializeComponent();
-            ListaEntidades = new ObservableCollection<Entidades>();
+
+            Inimigos = new ObservableCollection<Inimigo>();
         }
 
         // Evento para o zoom
@@ -65,7 +68,6 @@ namespace RPGMapper
 
             if (temp != null)
             {
-                ListaEntidades.Add(temp);
                 tile.AdicionarEntidade(temp);
 
                 temp = null;
@@ -156,14 +158,27 @@ namespace RPGMapper
             }
         }
 
-        // Botão novo
-        private void Novo_Executed(object sender, ExecutedRoutedEventArgs e)
+        // Função para abrir uma imagem e retornar o camingo como String
+        private string AbrirImagem()
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "Arquivos de Imagem (*.png, *.jpg)|*.png;*.jpg|Todos os arquivos (*.*)|*.*";
             openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
 
             if (openFileDialog.ShowDialog() == true)
+            {
+                return openFileDialog.FileName;
+            }
+            
+            return null;
+        }
+
+        // Botão novo
+        private void Novo_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            string FilePath = AbrirImagem();
+
+            if (FilePath != null)
             {
                 if (grade != null)
                 {
@@ -176,7 +191,7 @@ namespace RPGMapper
                             return;
                     }
                 }
-                grade = new Grade(50, 50, openFileDialog.FileName);
+                grade = new Grade(50, 50, FilePath);
 
                 gradeIC.ItemsSource = grade.Tiles;
 
@@ -192,19 +207,10 @@ namespace RPGMapper
         // Adicionar Inimigos
         private void Inimigo_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            if (temp?.GetType() == typeof(Inimigo))
-            {
-                Mouse.OverrideCursor = null;
-                temp = null;
-            }
-            else
-            {
-                Mouse.OverrideCursor = Cursors.Wait;
+            temp = new Inimigo();
 
-                Inimigo inimigo = new Inimigo();
-
-                temp = inimigo;
-            }
+            EnemyEditor.DataContext = temp;
+            EnemyEditor.Visibility = Visibility.Visible;
         }
 
         private void Inimigo_CanExecute(Object sender, CanExecuteRoutedEventArgs e)
@@ -217,6 +223,45 @@ namespace RPGMapper
             {
                 e.CanExecute = false;
             }
+        }
+
+        // Carregar uma imagem
+        private void Imagem_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            temp.Imagem = AbrirImagem();
+        }
+
+        private void Imagem_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+
+        // Comandos para adicionar ou cancelar a criação de uma Entidade
+        private void AdicionarEntidade_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            Inimigo inimigo = (Inimigo)temp;
+            Inimigos.Add(inimigo);
+
+            MessageBox.Show($"{inimigo.Vida} {inimigo.Nome}");
+
+            EnemyEditor.Visibility = Visibility.Collapsed;
+        }
+
+        private void AdicionarEntidade_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+
+        private void CancelarEntidade_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            temp = null;
+
+            EnemyEditor.Visibility = Visibility.Collapsed;
+        }
+
+        private void CancelarEntidade_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
         }
     }
 }
