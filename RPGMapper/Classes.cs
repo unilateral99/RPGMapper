@@ -14,7 +14,7 @@ using System.Windows.Media;
 
 namespace RPGMapper
 {
-    internal class Tile : INotifyPropertyChanged
+    public class Tile : INotifyPropertyChanged
     {
         public int x {  get; set; }
         public int y { get; set; }
@@ -52,7 +52,7 @@ namespace RPGMapper
     }
 
     // Classe para as propriedades da grade
-    internal class Grade : INotifyPropertyChanged
+    public class Grade : INotifyPropertyChanged
     {
         int _altura { get; set; }
         int _largura { get; set; }
@@ -176,7 +176,7 @@ namespace RPGMapper
     }
 
     // Adorner para o movimento das imagens das entidades
-    internal class AdornerArrastar : Adorner
+    public class AdornerArrastar : Adorner
     {
         private readonly VisualBrush _brush;
 

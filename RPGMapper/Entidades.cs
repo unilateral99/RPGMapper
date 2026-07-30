@@ -10,7 +10,7 @@ using System.Xml.Linq;
 namespace RPGMapper
 {
     // Classe pai para as entidades futuras, incluindo inimigos, jogadores e eventos
-    internal class Entidades : INotifyPropertyChanged
+    public class Entidades : INotifyPropertyChanged
     {
         internal Tile _localizacao {  get; set; }
         internal string _imagem { get; set; }
@@ -62,7 +62,7 @@ namespace RPGMapper
         }
     }
 
-    internal class Inimigo : Entidades
+    public class Inimigo : Entidades
     {
         internal int _iniciativa { get; set; }
         internal int _vida { get; set; }
@@ -81,25 +81,43 @@ namespace RPGMapper
 
         public Inimigo()
         {
-            Imagem = "C:\\Users\\User\\Documents\\Projeto\\RPGMapper\\Imagens\\ADESIVO-9.png";
+            Imagem = System.AppDomain.CurrentDomain.BaseDirectory + "\\Imagens\\ADESIVO-9.png";
+        }
+
+        public Inimigo(string imagem, string nome)
+        {
+            Imagem = imagem;
+            Nome = nome;
         }
     }
 
-    internal class Jogador : Entidades
+    public class Jogador : Entidades
     {
         internal int _iniciativa { get; set; }
 
         public Jogador()
         {
-            Imagem = "C:\\Users\\User\\Documents\\Projeto\\RPGMapper\\Imagens\\Sebastiao.jpg";
+            Imagem = System.AppDomain.CurrentDomain.BaseDirectory + "\\Imagens\\Sebastiao.jpg";
+        }
+
+        public Jogador(string imagem, string nome)
+        {
+            Imagem = imagem;
+            Nome = nome;
         }
     }
 
-    internal class Npc : Entidades
+    public class Npc : Entidades
     {
         public Npc()
         {
-            Imagem = "C:\\Users\\User\\Documents\\Projeto\\RPGMapper\\Imagens\\Andre.jpg";
+            Imagem = System.AppDomain.CurrentDomain.BaseDirectory + "\\Imagens\\Andre.jpg";
+        }
+
+        public Npc(string imagem, string nome)
+        {
+            Imagem = imagem;
+            Nome = nome;
         }
     }
 }

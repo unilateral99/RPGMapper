@@ -12,17 +12,31 @@ namespace RPGMapper
         public static RoutedUICommand Imagem {  get; set; }
 
         public static RoutedUICommand Inimigo { get; set; }
+        public static RoutedUICommand Jogador { get; set; }
+        public static RoutedUICommand Npc {  get; set; }
 
         public static RoutedUICommand CancelarEntidade { get; set; }
         public static RoutedUICommand AdicionarEntidade { get; set; }
 
         static MyCommands()
         {
-            InputGestureCollection Input = new InputGestureCollection();
-            KeyGesture InimigoKey = new KeyGesture(Key.I, ModifierKeys.Control);
-            Input.Add(InimigoKey);
+            InputGestureCollection InputE = new InputGestureCollection();
+            KeyGesture KeyG = new KeyGesture(Key.I, ModifierKeys.Control);
+            InputE.Add(KeyG);
 
-            Inimigo = new RoutedUICommand("Inimigo", "Inimigo", typeof(MyCommands), Input);
+            Inimigo = new RoutedUICommand("Inimigo", "Inimigo", typeof(MyCommands), InputE);
+
+            InputGestureCollection InputJ = new InputGestureCollection();
+            KeyG = new KeyGesture (Key.J, ModifierKeys.Control);
+            InputJ.Add(KeyG);
+
+            Jogador = new RoutedUICommand("Jogador", "Jogador", typeof(MyCommands), InputJ);
+
+            InputGestureCollection InputN = new InputGestureCollection();
+            KeyG = new KeyGesture(Key.N, ModifierKeys.Control);
+            InputN.Add(KeyG);
+
+            Npc = new RoutedUICommand("Npc", "Npc", typeof(MyCommands), InputN);
 
             Imagem = new RoutedUICommand("Imagem", "Imagem", typeof(MyCommands));
 

@@ -24,7 +24,7 @@ namespace RPGMapper
     public partial class MainWindow : Window
     {
         internal Grade grade;
-        internal Entidades temp;
+        public Entidades temp;
         internal AdornerLayer layer;
         internal AdornerArrastar adorner;
         internal Image imagemArrastar;
@@ -32,13 +32,36 @@ namespace RPGMapper
         internal Tile tileDestino;
 
         // Listas para as diversas entidades
-        internal ObservableCollection<Inimigo> Inimigos;
+        public ObservableCollection<Inimigo> Inimigos { get; set; }
+        public Inimigo inimigoSelecionado { get; set; }
+
+        public ObservableCollection<Jogador> Jogadores { get; set; }
+        public Jogador jogadorSelecionado { get; set; }
+
+        public ObservableCollection<Npc> Npcs { get; set; }
+        public Npc npcSelecionado { get; set; }
 
         public MainWindow()
         {
             InitializeComponent();
 
+            CbbInimigo.DataContext = this;
             Inimigos = new ObservableCollection<Inimigo>();
+            Inimigo inimigo = new Inimigo(System.AppDomain.CurrentDomain.BaseDirectory + "\\Imagens\\espada.png", "Inimigos");
+            Inimigos.Add(inimigo);
+            CbbInimigo.SelectedIndex = 0;
+
+            CbbJogador.DataContext = this;
+            Jogadores = new ObservableCollection<Jogador>();
+            Jogador jogador = new Jogador(System.AppDomain.CurrentDomain.BaseDirectory + "\\Imagens\\controle.png", "Jogadores");
+            Jogadores.Add(jogador);
+            CbbJogador.SelectedIndex = 0;
+
+            CbbNpc.DataContext = this;
+            Npcs = new ObservableCollection<Npc>();
+            Npc npc = new Npc(System.AppDomain.CurrentDomain.BaseDirectory + "\\Imagens\\homem.png", "Npcs");
+            Npcs.Add(npc);
+            CbbNpc.SelectedIndex = 0;
         }
 
         // Evento para o zoom
@@ -66,13 +89,13 @@ namespace RPGMapper
 
             // MessageBox.Show($"{tile.x}, {tile.y}");
 
-            if (temp != null)
+            if (CbbInimigo.SelectedIndex != 0)
             {
-                tile.AdicionarEntidade(temp);
-
-                temp = null;
-                Mouse.OverrideCursor = null;
-                return;
+                tile.AdicionarEntidade(inimigoSelecionado);
+            }
+            if (CbbJogador.SelectedIndex != 0)
+            {
+                tile.AdicionarEntidade(jogadorSelecionado);
             }
             if (e.RightButton == MouseButtonState.Pressed)
             {
@@ -213,7 +236,7 @@ namespace RPGMapper
             EnemyEditor.Visibility = Visibility.Visible;
         }
 
-        private void Inimigo_CanExecute(Object sender, CanExecuteRoutedEventArgs e)
+        private void Adicionar_CanExecute(Object sender, CanExecuteRoutedEventArgs e)
         {
             if (grade != null)
             {
@@ -223,6 +246,24 @@ namespace RPGMapper
             {
                 e.CanExecute = false;
             }
+        }
+
+        // Adicionar Jogador
+        private void Jogador_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            temp = new Jogador();
+
+            PlayerNpcEditor.DataContext = temp;
+            PlayerNpcEditor.Visibility = Visibility.Visible;
+        }
+
+        // Adicionar Npc
+        private void Npc_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            temp = new Npc();
+
+            PlayerNpcEditor.DataContext = temp;
+            PlayerNpcEditor.Visibility = Visibility.Visible;
         }
 
         // Carregar uma imagem
@@ -239,12 +280,37 @@ namespace RPGMapper
         // Comandos para adicionar ou cancelar a criação de uma Entidade
         private void AdicionarEntidade_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            Inimigo inimigo = (Inimigo)temp;
-            Inimigos.Add(inimigo);
+            if (temp.GetType() == typeof(Inimigo))
+            {
+                Inimigo inimigo = (Inimigo)temp;
+                Inimigos.Add(inimigo);
 
-            MessageBox.Show($"{inimigo.Vida} {inimigo.Nome}");
+                MessageBox.Show($"{inimigo.Vida} {inimigo.Nome}");
 
-            EnemyEditor.Visibility = Visibility.Collapsed;
+                EnemyEditor.Visibility = Visibility.Collapsed;
+                
+            }
+            if (temp.GetType() == typeof(Jogador))
+            {
+                Jogador jogador = (Jogador)temp;
+                Jogadores.Add(jogador);
+
+                MessageBox.Show($"{jogador.Nome}");
+
+                PlayerNpcEditor.Visibility = Visibility.Collapsed;
+
+            }
+            if (temp.GetType() == typeof(Npc))
+            {
+                Npc npc = (Npc)temp;
+                Npcs.Add(npc);
+
+                MessageBox.Show($"{npc.Nome}");
+
+                PlayerNpcEditor.Visibility = Visibility.Collapsed;
+
+            }
+            temp = null;
         }
 
         private void AdicionarEntidade_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -257,6 +323,7 @@ namespace RPGMapper
             temp = null;
 
             EnemyEditor.Visibility = Visibility.Collapsed;
+            PlayerNpcEditor.Visibility = Visibility.Collapsed;
         }
 
         private void CancelarEntidade_CanExecute(object sender, CanExecuteRoutedEventArgs e)
