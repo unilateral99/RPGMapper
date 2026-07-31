@@ -17,6 +17,7 @@
         <CommandBinding Command="local:MyCommands.Inimigo" Executed="Inimigo_Executed" CanExecute="Adicionar_CanExecute"/>
         <CommandBinding Command="local:MyCommands.Jogador" Executed="Jogador_Executed" CanExecute="Adicionar_CanExecute"/>
         <CommandBinding Command="local:MyCommands.Npc" Executed="Npc_Executed" CanExecute="Adicionar_CanExecute"/>
+        <CommandBinding Command="local:MyCommands.Mapa" Executed="Mapa_Executed" CanExecute="Adicionar_CanExecute"/>
         <CommandBinding Command="local:MyCommands.Imagem" Executed="Imagem_Executed" CanExecute="Imagem_CanExecute"/>
         <CommandBinding Command="local:MyCommands.AdicionarEntidade" Executed="AdicionarEntidade_Executed" CanExecute="AdicionarEntidade_CanExecute"/>
         <CommandBinding Command="local:MyCommands.CancelarEntidade" Executed="CancelarEntidade_Executed" CanExecute="CancelarEntidade_CanExecute"/>
@@ -27,8 +28,9 @@
     </Window.Resources>
 
     <Grid>
-        <Grid x:Name="MainGrid" Background="Black">
+        <Grid x:Name="MainGrid" Background="White">
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
@@ -51,9 +53,24 @@
                     <MenuItem Command="local:MyCommands.Inimigo" Header="Inimigo"/>
                     <MenuItem Command="local:MyCommands.Jogador" Header="Jogador"/>
                     <MenuItem Command="local:MyCommands.Npc" Header="Npc"/>
+                    <MenuItem Command="local:MyCommands.Mapa"/>
                 </MenuItem>
             </Menu>
-            
+
+            <TabControl SelectionChanged="tabControlMaps_SelectionChanged" x:Name="tabControlMaps" Grid.Row="2" Background="White" ItemsSource="{Binding grades}">
+                <TabControl.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Nome}"/>
+                    </DataTemplate>
+                </TabControl.ItemTemplate>
+
+                <TabControl.ContentTemplate>
+                    <DataTemplate>
+                        
+                    </DataTemplate>
+                </TabControl.ContentTemplate>
+            </TabControl>
+
             <ToolBarTray Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" IsLocked="True" Background="AntiqueWhite">
                 <ToolBar Background="AntiqueWhite">
                     <Label Content="Tamanho: " Background="AntiqueWhite"/>
@@ -98,18 +115,19 @@
                 </ToolBar>
             </ToolBarTray>
 
-            <ToolBarTray Grid.Column="1" Grid.Row="2" Orientation="Vertical" IsLocked="True" Background="AntiqueWhite">
+            <ToolBarTray Grid.Column="1" Grid.Row="2" Grid.RowSpan="2" Orientation="Vertical" IsLocked="True" Background="AntiqueWhite">
                 <ToolBar Background="AntiqueWhite">
                     <TextBlock Text="Adicionar:" Margin="0,0,0,10" Background="AntiqueWhite"/>
                     <Button Content="Inimigo" Command="local:MyCommands.Inimigo" Background="AntiqueWhite" ToolTip="Cria um molde de um Inimigo que pode ser colocado no mapa.&#10;Aparece na caixa 'Inimigos'."/>
                     <Button Content="Jogador" Command="local:MyCommands.Jogador" Background="AntiqueWhite" ToolTip="Cria um molde de um Jogador que pode ser colocado no mapa&#10;Aparece na caixa 'Jogadores'&#10;Só pode ter um de cada jogador no mapa, e essa será a posição inicial na partida"/>
                     <Button Content="NPC" Command="local:MyCommands.Npc" Background="AntiqueWhite"/>
                     <Button Content="Evento" Background="AntiqueWhite"/>
+                    <Button Command="local:MyCommands.Mapa" Content="Mapa" Background="AntiqueWhite"/>
                     <Button Content="Transição" Background="AntiqueWhite"/>
                 </ToolBar>
             </ToolBarTray>
 
-            <StatusBar Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2">
+            <StatusBar Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2">
                 <StatusBarItem>
                     <Label Content="Zoom: "/>
                 </StatusBarItem>
@@ -121,7 +139,7 @@
                 </StatusBarItem>
             </StatusBar>
 
-            <ScrollViewer PreviewMouseWheel="PreviewMouseWheel_ScrollViewer" Grid.Column="0" Grid.Row="2" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+            <ScrollViewer PreviewMouseWheel="PreviewMouseWheel_ScrollViewer" Grid.Column="0" Grid.Row="3" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Background="Black">
                 <Grid x:Name="GradeGrid" Width="{Binding LarguraGrade}" Height="{Binding AlturaGrade}">
 
                     <Button Command="ApplicationCommands.New" Content="Abrir imagem" Width="100" Height="30"/>

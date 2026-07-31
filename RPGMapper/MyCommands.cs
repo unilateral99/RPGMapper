@@ -15,6 +15,8 @@ namespace RPGMapper
         public static RoutedUICommand Jogador { get; set; }
         public static RoutedUICommand Npc {  get; set; }
 
+        public static RoutedUICommand Mapa {  get; set; }
+
         public static RoutedUICommand CancelarEntidade { get; set; }
         public static RoutedUICommand AdicionarEntidade { get; set; }
 
@@ -37,6 +39,12 @@ namespace RPGMapper
             InputN.Add(KeyG);
 
             Npc = new RoutedUICommand("Npc", "Npc", typeof(MyCommands), InputN);
+
+            InputGestureCollection InputM = new InputGestureCollection();
+            KeyG = new KeyGesture(Key.M, ModifierKeys.Control);
+            InputM.Add(KeyG);
+
+            Mapa = new RoutedUICommand("Mapa", "Mapa", typeof(MyCommands), InputM);
 
             Imagem = new RoutedUICommand("Imagem", "Imagem", typeof(MyCommands));
 

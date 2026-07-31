@@ -133,6 +133,19 @@ namespace RPGMapper
             }
         }
 
+        public string Nome
+        {
+            get => _nome;
+            set
+            {
+                if (value != _nome)
+                {
+                    _nome = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         public Grade(int altura, int largura, string imagem)
         {
             _altura = altura;
@@ -143,6 +156,7 @@ namespace RPGMapper
             Tiles = new ObservableCollection<Tile>();
             popularGrade();
             calcularTamanhoGrid();
+            nomearGrade();
         }
 
         // Limpa a coleção atual e recria as Tiles
@@ -164,6 +178,27 @@ namespace RPGMapper
         {
             AlturaGrade = (Altura * 25) * Zoom;
             LarguraGrade = (Largura * 25) * Zoom;
+        }
+
+        // Seta o nome inicial da Grade como o nome da imagem
+        void nomearGrade()
+        {
+            string buffer = "";
+
+            foreach (char c in Imagem)
+            {
+                if (c == '.')
+                {
+                    break;
+                }
+                buffer += c;
+                if (c == '\\')
+                {
+                    buffer = "";
+                }
+            }
+
+            _nome = buffer;
         }
 
         // Código necessário para o PropertyChanged

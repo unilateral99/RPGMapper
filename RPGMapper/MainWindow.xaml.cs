@@ -23,13 +23,15 @@ namespace RPGMapper
     /// </summary>
     public partial class MainWindow : Window
     {
-        internal Grade grade;
         public Entidades temp;
         internal AdornerLayer layer;
         internal AdornerArrastar adorner;
         internal Image imagemArrastar;
         internal Tile tileOrigem;
         internal Tile tileDestino;
+
+        public Grade grade {  get; set; }
+        public ObservableCollection<Grade> grades { get; set; } = new ObservableCollection<Grade>();
 
         // Listas para as diversas entidades
         public ObservableCollection<Inimigo> Inimigos { get; set; }
@@ -44,6 +46,8 @@ namespace RPGMapper
         public MainWindow()
         {
             InitializeComponent();
+
+            tabControlMaps.DataContext = this;
 
             CbbInimigo.DataContext = this;
             Inimigos = new ObservableCollection<Inimigo>();
@@ -96,6 +100,10 @@ namespace RPGMapper
             if (CbbJogador.SelectedIndex != 0)
             {
                 tile.AdicionarEntidade(jogadorSelecionado);
+            }
+            if (CbbNpc.SelectedIndex != 0)
+            {
+                tile.AdicionarEntidade(npcSelecionado);
             }
             if (e.RightButton == MouseButtonState.Pressed)
             {
@@ -171,6 +179,14 @@ namespace RPGMapper
             }
         }
 
+        // Função para trocar de mapas no tabControl
+        private void tabControlMaps_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            grade = grades[tabControlMaps.SelectedIndex];
+            MainGrid.DataContext = grade;
+            gradeIC.ItemsSource = grade.Tiles;
+        }
+
         // Função para fazer a troca de entidades entre duas tiles
         private void TrocarTiles(Tile start, Tile end)
         {
@@ -215,8 +231,8 @@ namespace RPGMapper
                     }
                 }
                 grade = new Grade(50, 50, FilePath);
-
-                gradeIC.ItemsSource = grade.Tiles;
+                grades.Add(grade);
+                tabControlMaps.SelectedIndex = 0;
 
                 this.DataContext = grade;
             }
@@ -264,6 +280,18 @@ namespace RPGMapper
 
             PlayerNpcEditor.DataContext = temp;
             PlayerNpcEditor.Visibility = Visibility.Visible;
+        }
+
+        // Adicionar Mapa
+        private void Mapa_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            string img = AbrirImagem();
+            
+            if (img != null)
+            {
+                Grade mapa = new Grade(50, 50, img);
+                grades.Add(mapa);
+            }
         }
 
         // Carregar uma imagem
