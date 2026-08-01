@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace RPGMapper
 {
@@ -29,6 +30,8 @@ namespace RPGMapper
         internal Image imagemArrastar;
         internal Tile tileOrigem;
         internal Tile tileDestino;
+
+        private DispatcherTimer timer;
 
         public Grade grade {  get; set; }
         public ObservableCollection<Grade> grades { get; set; } = new ObservableCollection<Grade>();
@@ -46,6 +49,10 @@ namespace RPGMapper
         public MainWindow()
         {
             InitializeComponent();
+
+            timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromMilliseconds(250);
+            timer.Tick += Timer_Tick;
 
             tabControlMaps.DataContext = this;
 
@@ -66,6 +73,11 @@ namespace RPGMapper
             Npc npc = new Npc(System.AppDomain.CurrentDomain.BaseDirectory + "\\Imagens\\homem.png", "Npcs");
             Npcs.Add(npc);
             CbbNpc.SelectedIndex = 0;
+        }
+
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            timer.Stop();
         }
 
         // Evento para o zoom
@@ -93,9 +105,29 @@ namespace RPGMapper
 
             // MessageBox.Show($"{tile.x}, {tile.y}");
 
+            timer.Start();
+
+            if (tile.Entidade != null)
+            {
+                if (e.LeftButton == MouseButtonState.Pressed)
+                {
+                    layer = AdornerLayer.GetAdornerLayer(MainGrid);
+                    DependencyObject obj = VisualTreeHelper.GetChild(grid, 1);
+                    imagemArrastar = obj as Image;
+                    imagemArrastar.CaptureMouse();
+
+                    adorner = new AdornerArrastar(imagemArrastar);
+
+                    layer.Add(adorner);
+
+                    tileOrigem = tile;
+                }
+            }
+
             if (CbbInimigo.SelectedIndex != 0)
             {
-                tile.AdicionarEntidade(inimigoSelecionado);
+                Inimigo inimigo = inimigoSelecionado.Clone();
+                tile.AdicionarEntidade(inimigo);
             }
             if (CbbJogador.SelectedIndex != 0)
             {
@@ -110,19 +142,7 @@ namespace RPGMapper
                 tileOrigem = null;
                 return;
             }
-            if (e.LeftButton == MouseButtonState.Pressed)
-            {
-                layer = AdornerLayer.GetAdornerLayer(MainGrid);
-                DependencyObject obj = VisualTreeHelper.GetChild(grid, 1);
-                imagemArrastar = obj as Image;
-                imagemArrastar.CaptureMouse();
-
-                adorner = new AdornerArrastar(imagemArrastar);
-
-                layer.Add(adorner);
-
-                tileOrigem = tile;
-            }
+            
         }
 
         // Move a imagem com o Mouse
@@ -142,49 +162,79 @@ namespace RPGMapper
         // Solta a imagem quando o mouse for solto
         private void EntidadeImagem_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            if (adorner != null)
-            {
-                layer.Remove(adorner);
-
-                adorner = null;
-            }
-            if (imagemArrastar  != null)
-            {
-                imagemArrastar.ReleaseMouseCapture();
-            }
-            if (tileOrigem != null)
+            try
             {
                 // Checa o objeto na posição do mouse até achar a grid
-
-                try
+                Point p = Mouse.GetPosition(MainGrid);
+                HitTestResult result = VisualTreeHelper.HitTest(MainGrid, p);
+                DependencyObject obj = result.VisualHit;
+                while (obj != null && obj.GetType() != typeof(Grid))
                 {
-                    Point p = Mouse.GetPosition(MainGrid);
-                    HitTestResult result = VisualTreeHelper.HitTest(MainGrid, p);
-                    DependencyObject obj = result.VisualHit;
-                    while (obj != null && obj.GetType() != typeof(Grid))
+                    obj = VisualTreeHelper.GetParent(obj);
+                }
+
+                Grid gradeTile = obj as Grid;
+                tileDestino = gradeTile.DataContext as Tile;
+
+                // Se clicado ou segurado
+                if (timer.IsEnabled)
+                {
+                    if (tileOrigem != null && tileOrigem.Entidade.GetType() == typeof(Inimigo))
                     {
-                        obj = VisualTreeHelper.GetParent(obj);
+                        tileOrigem.Entidade.Localizacao = tileOrigem;
+                        EnemyViewer.DataContext = tileOrigem.Entidade;
+                        EnemyViewer.Visibility = Visibility.Visible;
                     }
+                }
+                // Se segurado
+                if (adorner != null)
+                {
+                    layer.Remove(adorner);
 
-                    Grid gradeTile = obj as Grid;
-                    tileDestino = gradeTile.DataContext as Tile;
-
+                    adorner = null;
+                }
+                if (imagemArrastar != null)
+                {
+                    imagemArrastar.ReleaseMouseCapture();
+                }
+                if (tileOrigem != null)
+                {
                     TrocarTiles(tileOrigem, tileDestino);
                     tileOrigem = null;
                     tileDestino = null;
-                } catch 
-                {
-                    return;
                 }
             }
+            catch
+            {
+                return;
+            }
+            
         }
 
         // Função para trocar de mapas no tabControl
         private void tabControlMaps_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            grade = grades[tabControlMaps.SelectedIndex];
-            MainGrid.DataContext = grade;
-            gradeIC.ItemsSource = grade.Tiles;
+            if (tabControlMaps.Items.Count > 0)
+            {
+                grade = grades[tabControlMaps.SelectedIndex];
+                MainGrid.DataContext = grade;
+                gradeIC.ItemsSource = grade.Tiles;
+            }
+        }
+
+        // Eventos dos botões do EnemyViewer
+        private void FecharEnemyViewer(object sender, RoutedEventArgs e)
+        {
+            EnemyViewer.Visibility = Visibility.Collapsed;
+        }
+
+        private void DeletarInimigo(object sender, RoutedEventArgs e)
+        {
+            var but = sender as Button;
+            Inimigo inimigo = but.DataContext as Inimigo;
+            EnemyViewer.Visibility = Visibility.Collapsed;
+            inimigo.Localizacao.Entidade = null;
+            inimigo.Localizacao = null;
         }
 
         // Função para fazer a troca de entidades entre duas tiles
@@ -221,7 +271,7 @@ namespace RPGMapper
             {
                 if (grade != null)
                 {
-                    MessageBoxResult confirmacao = MessageBox.Show("Descartar mapa atual?", "Novo", MessageBoxButton.YesNo);
+                    MessageBoxResult confirmacao = MessageBox.Show("Descartar mapa atual?\nIsso irá descartar todos os mapas e entidades criados", "Novo", MessageBoxButton.YesNo);
                     switch (confirmacao)
                     {
                         case MessageBoxResult.Yes:
@@ -343,7 +393,56 @@ namespace RPGMapper
 
         private void AdicionarEntidade_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            e.CanExecute = true;
+            try
+            {
+                if (temp != null && temp.Nome != null)
+                {
+                    if (temp.GetType() == typeof(Inimigo))
+                    {
+                        Inimigo inimigo = (Inimigo)temp;
+
+                        if (inimigo.Imagem != null && inimigo.Vida >= 0 && inimigo.Nome.Length > 0)
+                        {
+                            e.CanExecute = true;
+                        }
+
+                    }
+                    else if (temp.GetType() == typeof(Jogador))
+                    {
+                        Jogador jogador = (Jogador)temp;
+
+                        if (jogador.Imagem != null)
+                        {
+                            e.CanExecute = true;
+                        }
+
+                    }
+                    else if (temp.GetType() == typeof(Npc))
+                    {
+                        Npc npc = (Npc)temp;
+
+                        if (npc.Imagem != null)
+                        {
+                            e.CanExecute = true;
+                        }
+
+                    }
+                    else
+                    {
+                        e.CanExecute = false;
+                    }
+                }
+                else
+                {
+                    e.CanExecute = false;
+                }
+                
+            }
+            catch (Exception)
+            {
+                e.CanExecute = false;
+            }
+            
         }
 
         private void CancelarEntidade_Executed(object sender, ExecutedRoutedEventArgs e)
@@ -357,6 +456,57 @@ namespace RPGMapper
         private void CancelarEntidade_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = true;
+        }
+
+        private void DeletarEntidade_Click(object sender, RoutedEventArgs e)
+        {
+            var but = sender as Button;
+            var entidade = but.DataContext;
+
+            if (entidade.GetType() == typeof(Inimigo))
+            {
+                for (int i = 1; i < Inimigos.Count; i++)
+                {
+                    if (entidade == Inimigos[i])
+                    {
+                        Inimigos.RemoveAt(i);
+                        return;
+                    }
+                }
+            }
+            if (entidade.GetType() == typeof(Jogador))
+            {
+                for (int i = 1; i < Jogadores.Count; i++)
+                {
+                    if (entidade == Jogadores[i])
+                    {
+                        Jogadores.RemoveAt(i);
+                        return;
+                    }
+                }
+            }
+            if (entidade.GetType() == typeof(Npc))
+            {
+                for (int i = 1; i < Npcs.Count; i++)
+                {
+                    if (entidade == Npcs[i])
+                    {
+                        Npcs.RemoveAt(i);
+                        return;
+                    }
+                }
+            }
+            if (entidade.GetType() == typeof(Grade))
+            {
+                for (int i = 1; i < grades.Count; i++)
+                {
+                    if (entidade == grades[i])
+                    {
+                        grades.RemoveAt(i);
+                        return;
+                    }
+                }
+            }
         }
     }
 }

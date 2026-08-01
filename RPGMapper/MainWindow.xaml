@@ -60,7 +60,10 @@
             <TabControl SelectionChanged="tabControlMaps_SelectionChanged" x:Name="tabControlMaps" Grid.Row="2" Background="White" ItemsSource="{Binding grades}">
                 <TabControl.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding Nome}"/>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Nome}"/>
+                            <Button Click="DeletarEntidade_Click" Content="✕" FontSize="12" Foreground="White" BorderBrush="DarkRed" BorderThickness="1" Background="Red" Width="16" Height="16"/>
+                        </StackPanel>
                     </DataTemplate>
                 </TabControl.ItemTemplate>
 
@@ -84,7 +87,8 @@
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
                                     <Image Source="{Binding Imagem}" Width="25" Height="20"/>
-                                    <TextBlock Text="{Binding Nome}" Width="75" Height="20"/>
+                                    <TextBlock Text="{Binding Nome}" Width="60" Height="20"/>
+                                    <Button Click="DeletarEntidade_Click" Content="✕" FontSize="12" Foreground="White" BorderBrush="DarkRed" BorderThickness="1" Background="Red" Width="16" Height="16"/>
                                 </StackPanel>
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
@@ -96,6 +100,7 @@
                                 <StackPanel Orientation="Horizontal">
                                     <Image Source="{Binding Imagem}" Width="25" Height="20"/>
                                     <TextBlock Text="{Binding Nome}" Width="75" Height="20"/>
+                                    <Button Click="DeletarEntidade_Click" Content="✕" FontSize="12" Foreground="White" BorderBrush="DarkRed" BorderThickness="1" Background="Red" Width="16" Height="16"/>
                                 </StackPanel>
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
@@ -107,6 +112,7 @@
                                 <StackPanel Orientation="Horizontal">
                                     <Image Source="{Binding Imagem}" Width="25" Height="20"/>
                                     <TextBlock Text="{Binding Nome}" Width="75" Height="20"/>
+                                    <Button Click="DeletarEntidade_Click" Content="✕" FontSize="12" Foreground="White" BorderBrush="DarkRed" BorderThickness="1" Background="Red" Width="16" Height="16"/>
                                 </StackPanel>
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
@@ -184,7 +190,7 @@
                     <Button Command="local:MyCommands.Imagem" Content="Enviar Imagem" Height="30" Width="150" Canvas.Right="20" Canvas.Top="150"/>
 
                     <TextBlock Text="Nome:" Margin="30" FontSize="20" Canvas.Top="200"/>
-                    <TextBox Text="{Binding Nome}" FontSize="20" Width="250" Canvas.Top="230" Canvas.Right="20"/>
+                    <TextBox Text="{Binding Nome, UpdateSourceTrigger=PropertyChanged}" FontSize="20" Width="250" Canvas.Top="230" Canvas.Right="20"/>
 
                     <TextBlock Text="Vida:" Margin="30" FontSize="20" Canvas.Top="250"/>
                     <TextBox Text="{Binding Vida, UpdateSourceTrigger=PropertyChanged}" FontSize="20" Width="250" Canvas.Top="280" Canvas.Right="20"/>
@@ -213,12 +219,48 @@
                     <Button Command="local:MyCommands.Imagem" Content="Enviar Imagem" Height="30" Width="150" Canvas.Right="20" Canvas.Top="150"/>
 
                     <TextBlock Text="Nome:" Margin="30" FontSize="20" Canvas.Top="200"/>
-                    <TextBox Text="{Binding Nome}" FontSize="20" Width="250" Canvas.Top="230" Canvas.Right="20"/>
+                    <TextBox Text="{Binding Nome, UpdateSourceTrigger=PropertyChanged}" FontSize="20" Width="250" Canvas.Top="230" Canvas.Right="20"/>
 
                     <Button Command="local:MyCommands.AdicionarEntidade" Content="Adicionar" Width="150" Height="30" Canvas.Bottom="20" Canvas.Right="20"/>
                     <Button Command="local:MyCommands.CancelarEntidade" Content="Cancelar" Width="150" Height="30" Canvas.Bottom="20" Canvas.Left="20"/>
                 </Canvas>
             </Border>
+        </Grid>
+
+        <Grid Name="EnemyViewer" Visibility="Collapsed">
+            <Canvas>
+                <Border Height="600" Width="300" Canvas.Bottom="75" Canvas.Left="2" Background="SandyBrown" BorderBrush="SaddleBrown" BorderThickness="2">
+                    <Border.Effect>
+                        <DropShadowEffect BlurRadius="10"
+                                          ShadowDepth="3"
+                                          Direction="315"
+                                          Color="Black"
+                                          Opacity="0.7"/>
+                    </Border.Effect>
+                    <Canvas>
+                        <Border Background="Black" Width="250" Height="250" Canvas.Left="20" Canvas.Top="20">
+                            <Image Source="{Binding Imagem}"/>
+                        </Border>
+                        <TextBlock Text="{Binding Nome}" TextWrapping="Wrap" FontSize="30" TextAlignment="Center" Width="250" Height="100" Canvas.Left="20" Canvas.Top="300"/>
+                        <Border Width="250" Height="50" Background="Red" Canvas.Left="20" Canvas.Bottom="150" BorderBrush="DarkRed" BorderThickness="2">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Vida:" Foreground="White" FontSize="20" Margin="5,5" Width="50"/>
+                                <TextBox Text="{Binding VidaAtual}" Foreground="White" FontSize="20" Height="30" Width="50" Background="DarkRed"/>
+                                <Label Content="/" Foreground="White" FontSize="20"/>
+                                <TextBlock Text="{Binding Vida}" Foreground="White" FontSize="20" Height="30" Width="50" Background="Red"/>
+                            </StackPanel>
+                        </Border>
+
+                        <Button Click="FecharEnemyViewer" Content="Fechar" Height="30" Width="200" Canvas.Bottom="10" Canvas.Right="20"/>
+                        <Button Click="DeletarInimigo" Width="30" Height="30" Background="DarkRed" BorderBrush="Black" BorderThickness="2" Canvas.Bottom="10" Canvas.Left="20">
+                            <Path Data="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" 
+                                  Fill="Red" 
+                                  Stretch="Uniform" 
+                                  Width="20" Height="20"/>
+                        </Button>
+                    </Canvas>
+                </Border>
+            </Canvas>
         </Grid>
     </Grid>
 </Window>

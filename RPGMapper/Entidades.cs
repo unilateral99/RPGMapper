@@ -66,6 +66,7 @@ namespace RPGMapper
     {
         internal int _iniciativa { get; set; }
         internal int _vida { get; set; }
+        internal int _vidaAtual { get; set; }
 
         public int Vida
         {
@@ -76,6 +77,20 @@ namespace RPGMapper
             set
             {
                 _vida = value;
+                _vidaAtual = value;
+            }
+        }
+
+        public int VidaAtual
+        {
+            get
+            {
+                return _vidaAtual;
+            }
+            set
+            {
+                _vidaAtual = value;
+                OnPropertyChanged();
             }
         }
 
@@ -88,6 +103,17 @@ namespace RPGMapper
         {
             Imagem = imagem;
             Nome = nome;
+        }
+
+        public Inimigo Clone()
+        {
+            return new Inimigo
+            {
+                Imagem = Imagem,
+                Nome = Nome,
+                Vida = Vida,
+                _iniciativa = _iniciativa
+            };
         }
     }
 
