@@ -18,6 +18,7 @@
         <CommandBinding Command="local:MyCommands.Jogador" Executed="Jogador_Executed" CanExecute="Adicionar_CanExecute"/>
         <CommandBinding Command="local:MyCommands.Npc" Executed="Npc_Executed" CanExecute="Adicionar_CanExecute"/>
         <CommandBinding Command="local:MyCommands.Mapa" Executed="Mapa_Executed" CanExecute="Adicionar_CanExecute"/>
+        <CommandBinding Command="local:MyCommands.Evento" Executed="Evento_Executed" CanExecute="Adicionar_CanExecute"/>
         <CommandBinding Command="local:MyCommands.Imagem" Executed="Imagem_Executed" CanExecute="Imagem_CanExecute"/>
         <CommandBinding Command="local:MyCommands.AdicionarEntidade" Executed="AdicionarEntidade_Executed" CanExecute="AdicionarEntidade_CanExecute"/>
         <CommandBinding Command="local:MyCommands.CancelarEntidade" Executed="CancelarEntidade_Executed" CanExecute="CancelarEntidade_CanExecute"/>
@@ -45,8 +46,12 @@
             <Menu Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
                 <MenuItem Header="Arquivo">
                     <MenuItem Command="ApplicationCommands.New" Header="Novo"/>
-                    <MenuItem Header="Abrir"/>
+                    <MenuItem Header="Abrir projeto"/>
+                    <MenuItem Header="Abrir Imagem"/>
+
+                    <Separator/>
                     <MenuItem Header="Salvar"/>
+                    <MenuItem Header="Salvar Como"/>
                 </MenuItem>
 
                 <MenuItem Header="Adicionar">
@@ -118,6 +123,18 @@
                         </ComboBox.ItemTemplate>
                     </ComboBox>
 
+                    <ComboBox Name="CbbEvento" ItemsSource="{Binding Eventos}" Width="100" SelectedItem="{Binding eventoSelecionado, Mode=OneWayToSource}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="{Binding Imagem}" Width="25" Height="20"/>
+                                    <TextBlock Text="{Binding Nome}" Width="75" Height="20"/>
+                                    <Button Click="DeletarEntidade_Click" Content="✕" FontSize="12" Foreground="White" BorderBrush="DarkRed" BorderThickness="1" Background="Red" Width="16" Height="16"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+
                 </ToolBar>
             </ToolBarTray>
 
@@ -127,7 +144,7 @@
                     <Button Content="Inimigo" Command="local:MyCommands.Inimigo" Background="AntiqueWhite" ToolTip="Cria um molde de um Inimigo que pode ser colocado no mapa.&#10;Aparece na caixa 'Inimigos'."/>
                     <Button Content="Jogador" Command="local:MyCommands.Jogador" Background="AntiqueWhite" ToolTip="Cria um molde de um Jogador que pode ser colocado no mapa&#10;Aparece na caixa 'Jogadores'&#10;Só pode ter um de cada jogador no mapa, e essa será a posição inicial na partida"/>
                     <Button Content="NPC" Command="local:MyCommands.Npc" Background="AntiqueWhite"/>
-                    <Button Content="Evento" Background="AntiqueWhite"/>
+                    <Button Content="Evento" Command="local:MyCommands.Evento" Background="AntiqueWhite"/>
                     <Button Command="local:MyCommands.Mapa" Content="Mapa" Background="AntiqueWhite"/>
                     <Button Content="Transição" Background="AntiqueWhite"/>
                 </ToolBar>
@@ -220,6 +237,29 @@
 
                     <TextBlock Text="Nome:" Margin="30" FontSize="20" Canvas.Top="200"/>
                     <TextBox Text="{Binding Nome, UpdateSourceTrigger=PropertyChanged}" FontSize="20" Width="250" Canvas.Top="230" Canvas.Right="20"/>
+
+                    <Button Command="local:MyCommands.AdicionarEntidade" Content="Adicionar" Width="150" Height="30" Canvas.Bottom="20" Canvas.Right="20"/>
+                    <Button Command="local:MyCommands.CancelarEntidade" Content="Cancelar" Width="150" Height="30" Canvas.Bottom="20" Canvas.Left="20"/>
+                </Canvas>
+            </Border>
+        </Grid>
+
+        <Grid Name="EventEditor" Visibility="Collapsed">
+            <Border Background="SandyBrown" BorderBrush="SaddleBrown" BorderThickness="5" Width="400" Height="400">
+                <Border.Effect>
+                    <DropShadowEffect BlurRadius="10"
+                  ShadowDepth="3"
+                  Direction="315"
+                  Color="Black"
+                  Opacity="0.7"/>
+                </Border.Effect>
+
+                <Canvas>
+                    <TextBlock Text="Nome:" Margin="30" FontSize="20" Canvas.Top="20"/>
+                    <TextBox Text="{Binding Nome, UpdateSourceTrigger=PropertyChanged}" FontSize="20" Width="250" Canvas.Top="50" Canvas.Right="20"/>
+
+                    <TextBlock Text="Descrição:" Margin="30" FontSize="20" Canvas.Top="80"/>
+                    <TextBox Text="{Binding Descricao, UpdateSourceTrigger=PropertyChanged}" FontSize="20" Width="350" Height="175" Canvas.Top="150" Canvas.Right="20" AcceptsReturn="True" TextWrapping="Wrap"/>
 
                     <Button Command="local:MyCommands.AdicionarEntidade" Content="Adicionar" Width="150" Height="30" Canvas.Bottom="20" Canvas.Right="20"/>
                     <Button Command="local:MyCommands.CancelarEntidade" Content="Cancelar" Width="150" Height="30" Canvas.Bottom="20" Canvas.Left="20"/>

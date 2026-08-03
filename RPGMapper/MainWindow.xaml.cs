@@ -46,6 +46,9 @@ namespace RPGMapper
         public ObservableCollection<Npc> Npcs { get; set; }
         public Npc npcSelecionado { get; set; }
 
+        public ObservableCollection<Evento> Eventos { get; set; }
+        public Evento eventoSelecionado { get; set; }
+
         public MainWindow()
         {
             InitializeComponent();
@@ -73,6 +76,12 @@ namespace RPGMapper
             Npc npc = new Npc(System.AppDomain.CurrentDomain.BaseDirectory + "\\Imagens\\homem.png", "Npcs");
             Npcs.Add(npc);
             CbbNpc.SelectedIndex = 0;
+
+            CbbEvento.DataContext = this;
+            Eventos = new ObservableCollection<Evento>();
+            Evento evento = new Evento("Eventos");
+            Eventos.Add(evento);
+            CbbEvento.SelectedIndex = 0;
         }
 
         private void Timer_Tick(object sender, EventArgs e)
@@ -214,7 +223,7 @@ namespace RPGMapper
         // Função para trocar de mapas no tabControl
         private void tabControlMaps_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (tabControlMaps.Items.Count > 0)
+            if (tabControlMaps.Items.Count > 0 && grades.Count > 0 && tabControlMaps.SelectedIndex >= 0)
             {
                 grade = grades[tabControlMaps.SelectedIndex];
                 MainGrid.DataContext = grade;
@@ -275,6 +284,10 @@ namespace RPGMapper
                     switch (confirmacao)
                     {
                         case MessageBoxResult.Yes:
+                            MainWindow mainWindow = new MainWindow();
+                            Application.Current.MainWindow = mainWindow;
+                            mainWindow.Show();
+                            this.Close();
                             break;
                         case MessageBoxResult.No:
                             return;
@@ -344,6 +357,15 @@ namespace RPGMapper
             }
         }
 
+        // Adicionar Evento
+        private void Evento_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            temp = new Evento();
+
+            EventEditor.DataContext = temp;
+            EventEditor.Visibility = Visibility.Visible;
+        }
+
         // Carregar uma imagem
         private void Imagem_Executed(object sender, ExecutedRoutedEventArgs e)
         {
@@ -388,6 +410,15 @@ namespace RPGMapper
                 PlayerNpcEditor.Visibility = Visibility.Collapsed;
 
             }
+            if (temp.GetType() == typeof(Evento))
+            {
+                Evento evento = (Evento)temp;
+                Eventos.Add(evento);
+
+                MessageBox.Show($"{evento.Nome}: {evento.Descricao}");
+
+                EventEditor.Visibility = Visibility.Collapsed;
+            }
             temp = null;
         }
 
@@ -426,6 +457,14 @@ namespace RPGMapper
                             e.CanExecute = true;
                         }
 
+                    }
+                    else if(temp.GetType() == typeof(Evento))
+                    {
+                        Evento evento = (Evento)temp;
+                        if (evento.Nome != null)
+                        {
+                            e.CanExecute = true;
+                        }
                     }
                     else
                     {
@@ -498,11 +537,26 @@ namespace RPGMapper
             }
             if (entidade.GetType() == typeof(Grade))
             {
-                for (int i = 1; i < grades.Count; i++)
+                for (int i = 0; i < grades.Count; i++)
                 {
                     if (entidade == grades[i])
                     {
-                        grades.RemoveAt(i);
+                        if (tabControlMaps.SelectedIndex == i)
+                        {
+                            tabControlMaps.SelectedIndex = i - 1;
+                        }
+                        if (grades.Count > 1)
+                        {
+                            MessageBoxResult result = MessageBox.Show("Removar mapa?", "Confirmação", MessageBoxButton.YesNoCancel);
+                            if (result == MessageBoxResult.Yes)
+                            {
+                                grades.RemoveAt(i);
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("É necessárrio ter pelo menos 1 mapa", "Falha", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
                         return;
                     }
                 }

@@ -146,6 +146,11 @@ namespace RPGMapper
             }
         }
 
+        public Grade()
+        {
+            
+        }
+
         public Grade(int altura, int largura, string imagem)
         {
             _altura = altura;

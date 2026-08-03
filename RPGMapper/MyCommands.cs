@@ -14,6 +14,7 @@ namespace RPGMapper
         public static RoutedUICommand Inimigo { get; set; }
         public static RoutedUICommand Jogador { get; set; }
         public static RoutedUICommand Npc {  get; set; }
+        public static RoutedUICommand Evento { get; set; }
 
         public static RoutedUICommand Mapa {  get; set; }
 
@@ -45,6 +46,12 @@ namespace RPGMapper
             InputM.Add(KeyG);
 
             Mapa = new RoutedUICommand("Mapa", "Mapa", typeof(MyCommands), InputM);
+
+            InputGestureCollection InputEv = new InputGestureCollection();
+            KeyG = new KeyGesture(Key.V, ModifierKeys.Control);
+            InputEv.Add(KeyG);
+
+            Evento = new RoutedUICommand("Evento", "Evento", typeof(MyCommands), InputEv);
 
             Imagem = new RoutedUICommand("Imagem", "Imagem", typeof(MyCommands));
 

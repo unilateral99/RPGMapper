@@ -119,7 +119,7 @@ namespace RPGMapper
 
     public class Jogador : Entidades
     {
-        internal int _iniciativa { get; set; }
+        public int Iniciativa { get; set; }
 
         public Jogador()
         {
@@ -144,6 +144,29 @@ namespace RPGMapper
         {
             Imagem = imagem;
             Nome = nome;
+        }
+    }
+
+    public class Evento : Entidades
+    {
+        public string Descricao {  get; set; }
+
+        public Evento()
+        {
+            Imagem = System.AppDomain.CurrentDomain.BaseDirectory + "\\Imagens\\EventFlag.png";
+        }
+
+        public Evento(string nome)
+        {
+            Imagem = System.AppDomain.CurrentDomain.BaseDirectory + "\\Imagens\\EventFlag.png";
+            Nome = nome;
+        }
+
+        public Evento(string nome, string descricao)
+        {
+            Imagem = System.AppDomain.CurrentDomain.BaseDirectory + "\\Imagens\\EventFlag.png";
+            Nome = nome;
+            Descricao = descricao;
         }
     }
 }
