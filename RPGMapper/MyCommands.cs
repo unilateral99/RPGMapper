@@ -15,11 +15,15 @@ namespace RPGMapper
         public static RoutedUICommand Jogador { get; set; }
         public static RoutedUICommand Npc {  get; set; }
         public static RoutedUICommand Evento { get; set; }
-
         public static RoutedUICommand Mapa {  get; set; }
+        public static RoutedUICommand Transicao { get; set; }
 
         public static RoutedUICommand CancelarEntidade { get; set; }
         public static RoutedUICommand AdicionarEntidade { get; set; }
+        public static RoutedUICommand AtivarEvento { get; set; }
+        public static RoutedUICommand AtivarTransicao {  get; set; }
+
+        public static RoutedUICommand EscolherJogador { get; set; }
 
         static MyCommands()
         {
@@ -53,10 +57,20 @@ namespace RPGMapper
 
             Evento = new RoutedUICommand("Evento", "Evento", typeof(MyCommands), InputEv);
 
+            InputGestureCollection InputTr = new InputGestureCollection();
+            KeyG = new KeyGesture(Key.T, ModifierKeys.Control);
+            InputTr.Add(KeyG);
+
+            Transicao = new RoutedUICommand("Transição", "Transição", typeof(MyCommands), InputTr);
+
             Imagem = new RoutedUICommand("Imagem", "Imagem", typeof(MyCommands));
 
             CancelarEntidade = new RoutedUICommand("Cancelar Entidade", "Cancelar Entidade", typeof (MyCommands));
             AdicionarEntidade = new RoutedUICommand("Adicionar Entidade", "Adicionar Entidade", typeof(MyCommands));
+            AtivarEvento = new RoutedUICommand("Ativar Evento", "Ativar Evento", typeof(MyCommands));
+            AtivarTransicao = new RoutedUICommand("Ativar Evento", "Ativar Evento", typeof(MyCommands));
+
+            EscolherJogador = new RoutedUICommand("Escolher Jogador", "Escolher Jogador", typeof(MyCommands));
         }
     }
 }

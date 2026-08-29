@@ -1,0 +1,188 @@
+﻿<Window x:Class="RPGMapper.TelaDeJogoJogador"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RPGMapper"
+        mc:Ignorable="d"
+        Title="Tela de Jogo - Jogador" Height="800" Width="800"
+        WindowStartupLocation="CenterScreen"
+        Closed="Window_Closed">
+
+    <Window.CommandBindings>
+        <CommandBinding Command="local:MyCommands.EscolherJogador" CanExecute="EscolherJogador_CanExecute" Executed="EscolherJogador_Executed"/>
+    </Window.CommandBindings>
+    
+    <Window.Resources>
+        <SolidColorBrush x:Key="WoodDark" Color="#4A2F1B"/>
+        <SolidColorBrush x:Key="Wood" Color="#8B5A2B"/>
+        <SolidColorBrush x:Key="Parchment" Color="#E8D3A5"/>
+        <SolidColorBrush x:Key="Ink" Color="#3A2514"/>
+        <SolidColorBrush x:Key="Gold" Color="#C49A45"/>
+        <SolidColorBrush x:Key="Panel" Color="#D6BC8B"/>
+    </Window.Resources>
+
+    <Grid PreviewMouseWheel="MainGrid_PreviewMouseWheel" Name="MainGrid" Background="{StaticResource Panel}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="5"/>
+            <RowDefinition Height="200" MinHeight="60" MaxHeight="500"/>
+        </Grid.RowDefinitions>
+
+        <!-- GridSplitters -->
+        <GridSplitter Background="Transparent" Grid.Row="1" Height="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+
+
+        <!-- Chat e outros -->
+        <Border BorderBrush="{StaticResource WoodDark}" BorderThickness="2" Grid.Row="2">
+
+            <Border.Background>
+                <ImageBrush ImageSource="/assets/Madeira.jpg"/>
+            </Border.Background>
+            
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="200"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid Name="ChatGrid" Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="40"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid.Background>
+                        <ImageBrush ImageSource="/assets/Pergaminho.jpg"/>
+                    </Grid.Background>
+
+                    <TextBlock Text="Chat: " FontFamily="Segoe Script" FontSize="20" Margin="5" FontWeight="Bold"/>
+                    <ScrollViewer Name="Chat_ScrollViewer" ScrollChanged="Chat_ScrollViewer_ScrollChanged"  Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                        <ItemsControl ItemsSource="{Binding Mensagens}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border BorderBrush="Gray" BorderThickness="1">
+                                        <StackPanel Orientation="Horizontal" Margin="5,0,5,0">
+                                            <TextBlock Text="{Binding NomeJogador}" FontFamily="Georgia" FontSize="15" Foreground="Black"/>
+                                            <TextBlock Text="{Binding Texto}" Margin="10,0,0,0" FontFamily="Segoe Script" FontSize="12" TextWrapping="Wrap"/>
+                                        </StackPanel>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+
+                    <Grid Grid.Row="2" Margin="0,0,20,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Enviar: " FontFamily="Segoe Script" FontSize="20" Margin="5" FontWeight="Bold"/>
+                        <TextBox Name="Mensagem_TextBox"
+                                 KeyDown="Mensagem_KeyDown"
+                                 Grid.Column="1"
+                                 BorderBrush="{StaticResource Panel}"
+                                 Background="{StaticResource Parchment}"
+                                 Height="30" HorizontalAlignment="Stretch"
+                                 FontFamily="Segoe Script"
+                                 FontSize="16"/>
+                    </Grid>
+                </Grid>
+
+                <StackPanel Grid.Column="1" VerticalAlignment="Bottom">
+                    <Button Click="Button_Click" Height="50" Width="150" Margin="10" Background="{StaticResource Wood}" BorderBrush="{StaticResource WoodDark}" Foreground="White" Content="Sair da sala" FontFamily="Georgia" FontSize="20"/>
+
+                    <StatusBar Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" Background="{StaticResource Panel}" BorderBrush="{StaticResource WoodDark}" BorderThickness="1">
+                        <StatusBarItem>
+                            <Label Content="Zoom: "/>
+                        </StatusBarItem>
+                        <StatusBarItem>
+                            <Slider Name="ZoomSlider" DataContext="{Binding MapaAtual}" Minimum="0.5" Maximum="2.5" Width="100" TickPlacement="BottomRight" TickFrequency="0.1" IsSnapToTickEnabled="True" Value="{Binding Zoom, Mode=TwoWay}"/>
+                        </StatusBarItem>
+                    </StatusBar>
+                </StackPanel>
+
+            </Grid>
+        </Border>
+
+        <!-- Tela de jogo -->
+        <ScrollViewer Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+            <Grid x:Name="GradeGrid" Width="{Binding MapaAtual.LarguraGrade}" Height="{Binding MapaAtual.AlturaGrade}">
+                <Image Source="{Binding MapaAtual.Imagem}" Stretch="Fill"/>
+
+                <ItemsControl Name="GradeIC" ItemsSource="{Binding MapaAtual.Tiles}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UniformGrid Name="uniformGrid_main" Columns="{Binding MapaAtual.Largura}" Rows="{Binding MapaAtual.Altura}"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Grid MouseDown="Grid_MouseDown">
+                                <TextBlock/>
+                                <Ellipse Name="EntidadeImagem" MouseMove="EntidadeImagem_MouseMove" MouseUp="EntidadeImagem_MouseUp" DataContext="{Binding Entidade}" Visibility="{Binding Visivel}">
+                                    <Ellipse.Fill>
+                                        <ImageBrush ImageSource="{Binding Imagem}"/>
+                                    </Ellipse.Fill>
+                                </Ellipse>
+                                <Border BorderBrush="#554433"
+                                BorderThickness="0.5"
+                                Opacity="0.5"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </Grid>
+        </ScrollViewer>
+
+        <Grid Name="PlayerSelector" Visibility="Collapsed" Height="500" Width="700">
+            <Border Background="{StaticResource Wood}" BorderBrush="{StaticResource WoodDark}" BorderThickness="4">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Border Grid.Row="0" Background="{StaticResource Parchment}" BorderBrush="{StaticResource WoodDark}" BorderThickness="2" Margin="10">
+                        <TextBlock Text="Seletor de personagem" FontSize="30" FontWeight="Bold" FontFamily="Georgia" HorizontalAlignment="Center" />
+                    </Border>
+
+                    <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
+                        <ItemsControl ItemsSource="{Binding JogadoresSelecionar}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Width="200" Margin="15" Background="{StaticResource Panel}" BorderBrush="{StaticResource WoodDark}" BorderThickness="2" CornerRadius="2">
+                                        <StackPanel>
+                                            <Ellipse Width="125" Height="125" Margin="0,40">
+                                                <Ellipse.Fill>
+                                                    <ImageBrush ImageSource="{Binding Imagem}"/>
+                                                </Ellipse.Fill>
+                                            </Ellipse>
+
+                                            <TextBlock Text="{Binding Nome}" FontSize="25" FontFamily="Segoe Script" TextWrapping="WrapWithOverflow" HorizontalAlignment="Center" TextAlignment="Center"/>
+
+                                            <Button Click="Selecionar_Click" Margin="10,50,10,10" Height="30" Content="Selecionar" FontFamily="Georgia" FontSize="16"/>
+                                            <StackPanel Orientation="Horizontal" Margin="12,0">
+                                                <TextBlock Text="Jogador: " />
+                                                <TextBlock Text="{Binding NomeJogador}"/>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+
+                </Grid>
+            </Border>
+        </Grid>
+    </Grid>
+</Window>

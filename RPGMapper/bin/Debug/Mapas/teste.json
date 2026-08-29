@@ -1,0 +1,128 @@
+{
+  "Grades": [
+    {
+      "Altura": 50,
+      "Largura": 50,
+      "AlturaGrade": 1250,
+      "LarguraGrade": 1250,
+      "Zoom": 1,
+      "Imagem": "C:\\Users\\User\\Pictures\\5.png",
+      "Nome": "5"
+    }
+  ],
+  "Inimigos": [
+    {
+      "Vida": 0,
+      "VidaAtual": 0,
+      "Localizacao": null,
+      "Imagem": "C:\\Users\\User\\Documents\\Projeto\\RPGMapper\\bin\\Debug\\\\Imagens\\espada.png",
+      "Nome": "Inimigos",
+      "Visivel": 1
+    },
+    {
+      "Vida": 21,
+      "VidaAtual": 21,
+      "Localizacao": null,
+      "Imagem": "C:\\Users\\User\\Documents\\Projeto\\RPGMapper\\bin\\Debug\\\\Imagens\\ADESIVO-9.png",
+      "Nome": "asd",
+      "Visivel": 1
+    }
+  ],
+  "Jogadores": [
+    {
+      "Iniciativa": 0,
+      "Localizacao": null,
+      "Imagem": "C:\\Users\\User\\Documents\\Projeto\\RPGMapper\\bin\\Debug\\\\Imagens\\controle.png",
+      "Nome": "Jogadores",
+      "Visivel": 1
+    }
+  ],
+  "Npcs": [
+    {
+      "Localizacao": null,
+      "Imagem": "C:\\Users\\User\\Documents\\Projeto\\RPGMapper\\bin\\Debug\\\\Imagens\\homem.png",
+      "Nome": "Npcs",
+      "Visivel": 1
+    }
+  ],
+  "Eventos": [
+    {
+      "Descricao": null,
+      "Ativo": false,
+      "Localizacao": null,
+      "Imagem": "C:\\Users\\User\\Documents\\Projeto\\RPGMapper\\bin\\Debug\\\\Imagens\\EventFlag.png",
+      "Nome": "Eventos",
+      "Visivel": 1
+    }
+  ],
+  "TileEntidades": [
+    [
+      {
+        "x": 9,
+        "y": 10,
+        "numero": 460,
+        "Entidade": {
+          "Localizacao": null,
+          "Imagem": "C:\\Users\\User\\Documents\\Projeto\\RPGMapper\\bin\\Debug\\\\Imagens\\ADESIVO-9.png",
+          "Nome": "asd",
+          "Visivel": 1
+        }
+      },
+      {
+        "x": 13,
+        "y": 14,
+        "numero": 664,
+        "Entidade": {
+          "Localizacao": null,
+          "Imagem": "C:\\Users\\User\\Documents\\Projeto\\RPGMapper\\bin\\Debug\\\\Imagens\\ADESIVO-9.png",
+          "Nome": "asd",
+          "Visivel": 1
+        }
+      },
+      {
+        "x": 14,
+        "y": 12,
+        "numero": 712,
+        "Entidade": {
+          "Localizacao": null,
+          "Imagem": "C:\\Users\\User\\Documents\\Projeto\\RPGMapper\\bin\\Debug\\\\Imagens\\ADESIVO-9.png",
+          "Nome": "asd",
+          "Visivel": 1
+        }
+      },
+      {
+        "x": 16,
+        "y": 9,
+        "numero": 809,
+        "Entidade": {
+          "Localizacao": null,
+          "Imagem": "C:\\Users\\User\\Documents\\Projeto\\RPGMapper\\bin\\Debug\\\\Imagens\\ADESIVO-9.png",
+          "Nome": "asd",
+          "Visivel": 1
+        }
+      },
+      {
+        "x": 16,
+        "y": 13,
+        "numero": 813,
+        "Entidade": {
+          "Localizacao": null,
+          "Imagem": "C:\\Users\\User\\Documents\\Projeto\\RPGMapper\\bin\\Debug\\\\Imagens\\ADESIVO-9.png",
+          "Nome": "asd",
+          "Visivel": 1
+        }
+      },
+      {
+        "x": 18,
+        "y": 19,
+        "numero": 919,
+        "Entidade": {
+          "Localizacao": null,
+          "Imagem": "C:\\Users\\User\\Documents\\Projeto\\RPGMapper\\bin\\Debug\\\\Imagens\\ADESIVO-9.png",
+          "Nome": "asd",
+          "Visivel": 1
+        }
+      }
+    ]
+  ]
+}

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,37 +17,94 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using System.Text.Json;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+
 
 namespace RPGMapper
 {
     /// <summary>
     /// Interação lógica para MainWindow.xam
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, INotifyPropertyChanged
     {
         public Entidades temp;
+        public Transicao transicao;
         internal AdornerLayer layer;
         internal AdornerArrastar adorner;
         internal Image imagemArrastar;
         internal Tile tileOrigem;
         internal Tile tileDestino;
+        internal string file;
 
         private DispatcherTimer timer;
 
         public Grade grade {  get; set; }
-        public ObservableCollection<Grade> grades { get; set; } = new ObservableCollection<Grade>();
+        ObservableCollection<Grade> _grades = new ObservableCollection<Grade>();
+        public ObservableCollection<Grade> grades
+        {
+            get { return _grades; }
+            set
+            {
+                _grades = value;
+                OnPropertyChanged();
+                tabControlMaps.SelectedIndex = 0;
+                StartButton.Visibility = Visibility.Collapsed;
+            }
+        }
 
         // Listas para as diversas entidades
-        public ObservableCollection<Inimigo> Inimigos { get; set; }
+        ObservableCollection<Inimigo> _inimigos = new ObservableCollection<Inimigo>();
+        public ObservableCollection<Inimigo> Inimigos
+        {
+            get { return _inimigos; }
+            set
+            {
+                _inimigos = value;
+                OnPropertyChanged();
+                CbbInimigo.SelectedIndex = 0;
+            }
+        }
         public Inimigo inimigoSelecionado { get; set; }
 
-        public ObservableCollection<Jogador> Jogadores { get; set; }
+        ObservableCollection<Jogador> _jogadores = new ObservableCollection<Jogador>();
+        public ObservableCollection<Jogador> Jogadores
+        {
+            get { return _jogadores; }
+            set
+            {
+                _jogadores = value;
+                OnPropertyChanged();
+                CbbJogador.SelectedIndex = 0;
+            }
+        }
         public Jogador jogadorSelecionado { get; set; }
 
-        public ObservableCollection<Npc> Npcs { get; set; }
+        ObservableCollection<Npc> _npcs = new ObservableCollection<Npc>();
+        public ObservableCollection<Npc> Npcs
+        {
+            get { return _npcs; }
+            set
+            {
+                _npcs = value;
+                OnPropertyChanged();
+                CbbNpc.SelectedIndex = 0;
+            }
+        }
         public Npc npcSelecionado { get; set; }
 
-        public ObservableCollection<Evento> Eventos { get; set; }
+        ObservableCollection<Evento> _eventos = new ObservableCollection<Evento>();
+        public ObservableCollection<Evento> Eventos
+        {
+            get { return _eventos; }
+            set
+            {
+                _eventos = value;
+                OnPropertyChanged();
+                CbbEvento.SelectedIndex = 0;
+            }
+        }
         public Evento eventoSelecionado { get; set; }
 
         public MainWindow()
@@ -54,7 +112,7 @@ namespace RPGMapper
             InitializeComponent();
 
             timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromMilliseconds(250);
+            timer.Interval = TimeSpan.FromMilliseconds(75);
             timer.Tick += Timer_Tick;
 
             tabControlMaps.DataContext = this;
@@ -82,6 +140,8 @@ namespace RPGMapper
             Evento evento = new Evento("Eventos");
             Eventos.Add(evento);
             CbbEvento.SelectedIndex = 0;
+
+            TransicaoEditor.DataContext = this;
         }
 
         private void Timer_Tick(object sender, EventArgs e)
@@ -146,9 +206,22 @@ namespace RPGMapper
             {
                 tile.AdicionarEntidade(npcSelecionado);
             }
+            if (CbbEvento.SelectedIndex != 0)
+            {
+                tile.AdicionarEntidade(eventoSelecionado);
+            }
+            if (transicao != null)
+            {
+                Mouse.OverrideCursor = null;
+                tile.AdicionarEntidade(transicao);
+                MessageBox.Show(transicao.grade.Nome);
+                transicao = null;
+            }
             if (e.RightButton == MouseButtonState.Pressed)
             {
+                Mouse.OverrideCursor = null;
                 tileOrigem = null;
+                temp = null;
                 return;
             }
             
@@ -185,7 +258,7 @@ namespace RPGMapper
                 Grid gradeTile = obj as Grid;
                 tileDestino = gradeTile.DataContext as Tile;
 
-                // Se clicado ou segurado
+                // Se clicado
                 if (timer.IsEnabled)
                 {
                     if (tileOrigem != null && tileOrigem.Entidade.GetType() == typeof(Inimigo))
@@ -251,6 +324,10 @@ namespace RPGMapper
         {
             if (end.Entidade != start.Entidade)
             {
+                if (end.Entidade != null)
+                {
+                    return;
+                }
                 end.Entidade = start.Entidade;
                 start.Entidade = null;
             }
@@ -274,36 +351,27 @@ namespace RPGMapper
         // Botão novo
         private void Novo_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            string FilePath = AbrirImagem();
-
-            if (FilePath != null)
+            MessageBoxResult confirmacao = MessageBox.Show("Descartar mapa atual?\nIsso irá descartar todos os mapas e entidades criados", "Novo", MessageBoxButton.YesNo);
+            switch (confirmacao)
             {
-                if (grade != null)
-                {
-                    MessageBoxResult confirmacao = MessageBox.Show("Descartar mapa atual?\nIsso irá descartar todos os mapas e entidades criados", "Novo", MessageBoxButton.YesNo);
-                    switch (confirmacao)
-                    {
-                        case MessageBoxResult.Yes:
-                            MainWindow mainWindow = new MainWindow();
-                            Application.Current.MainWindow = mainWindow;
-                            mainWindow.Show();
-                            this.Close();
-                            break;
-                        case MessageBoxResult.No:
-                            return;
-                    }
-                }
-                grade = new Grade(50, 50, FilePath);
-                grades.Add(grade);
-                tabControlMaps.SelectedIndex = 0;
-
-                this.DataContext = grade;
+                case MessageBoxResult.Yes:
+                    MainWindow mainWindow = new MainWindow();
+                    Application.Current.MainWindow = mainWindow;
+                    mainWindow.Show();
+                    this.Close();
+                    break;
+                case MessageBoxResult.No:
+                    return;
             }
         }
 
         private void Novo_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            e.CanExecute = true;
+            if (grades.Count > 0)
+            {
+                e.CanExecute = true;
+            }
+            else { e.CanExecute = false; }
         }
 
         // Adicionar Inimigos
@@ -332,6 +400,10 @@ namespace RPGMapper
         {
             temp = new Jogador();
 
+            EnemyEditor.Visibility = Visibility.Collapsed;
+            TransicaoEditor.Visibility = Visibility.Collapsed;
+            EventEditor.Visibility = Visibility.Collapsed;
+
             PlayerNpcEditor.DataContext = temp;
             PlayerNpcEditor.Visibility = Visibility.Visible;
         }
@@ -340,6 +412,10 @@ namespace RPGMapper
         private void Npc_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             temp = new Npc();
+
+            EnemyEditor.Visibility = Visibility.Collapsed;
+            TransicaoEditor.Visibility = Visibility.Collapsed;
+            EventEditor.Visibility = Visibility.Collapsed;
 
             PlayerNpcEditor.DataContext = temp;
             PlayerNpcEditor.Visibility = Visibility.Visible;
@@ -355,6 +431,16 @@ namespace RPGMapper
                 Grade mapa = new Grade(50, 50, img);
                 grades.Add(mapa);
             }
+            if (grades.Count == 1)
+            {
+                tabControlMaps.SelectedIndex = 0;
+                StartButton.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        private void Mapa_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
         }
 
         // Adicionar Evento
@@ -362,8 +448,37 @@ namespace RPGMapper
         {
             temp = new Evento();
 
+            EnemyEditor.Visibility = Visibility.Collapsed;
+            PlayerNpcEditor.Visibility = Visibility.Collapsed;
+            TransicaoEditor.Visibility = Visibility.Collapsed;
+
             EventEditor.DataContext = temp;
             EventEditor.Visibility = Visibility.Visible;
+        }
+
+        // Adicionar Transição
+        private void Transicao_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            transicao = new Transicao();
+
+            EnemyEditor.Visibility = Visibility.Collapsed;
+            PlayerNpcEditor.Visibility = Visibility.Collapsed;
+            EventEditor.Visibility = Visibility.Collapsed;
+
+            TransicaoMapas.SelectedIndex = 0;
+            TransicaoEditor.Visibility = Visibility.Visible;
+        }
+
+        private void Transicao_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            if (grades.Count > 1)
+            {
+                e.CanExecute = true;
+            }
+            else
+            {
+                e.CanExecute = false;
+            }
         }
 
         // Carregar uma imagem
@@ -380,46 +495,57 @@ namespace RPGMapper
         // Comandos para adicionar ou cancelar a criação de uma Entidade
         private void AdicionarEntidade_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            if (temp.GetType() == typeof(Inimigo))
+            if (temp != null)
             {
-                Inimigo inimigo = (Inimigo)temp;
-                Inimigos.Add(inimigo);
+                if (temp.GetType() == typeof(Inimigo))
+                {
+                    Inimigo inimigo = (Inimigo)temp;
+                    Inimigos.Add(inimigo);
 
-                MessageBox.Show($"{inimigo.Vida} {inimigo.Nome}");
+                    MessageBox.Show($"{inimigo.Vida} {inimigo.Nome}");
 
-                EnemyEditor.Visibility = Visibility.Collapsed;
-                
+                    EnemyEditor.Visibility = Visibility.Collapsed;
+                    temp = null;
+                }
+                else if (temp.GetType() == typeof(Jogador))
+                {
+                    Jogador jogador = (Jogador)temp;
+                    Jogadores.Add(jogador);
+
+                    MessageBox.Show($"{jogador.Nome}");
+
+                    PlayerNpcEditor.Visibility = Visibility.Collapsed;
+                    temp = null;
+                }
+                else if (temp.GetType() == typeof(Npc))
+                {
+                    Npc npc = (Npc)temp;
+                    Npcs.Add(npc);
+
+                    MessageBox.Show($"{npc.Nome}");
+
+                    PlayerNpcEditor.Visibility = Visibility.Collapsed;
+                    temp = null;
+
+                }
+                else if (temp.GetType() == typeof(Evento))
+                {
+                    Evento evento = (Evento)temp;
+                    Eventos.Add(evento);
+
+                    MessageBox.Show($"{evento.Nome}: {evento.Descricao}");
+
+                    EventEditor.Visibility = Visibility.Collapsed;
+                    temp = null;
+                }
             }
-            if (temp.GetType() == typeof(Jogador))
+            else if (transicao != null)
             {
-                Jogador jogador = (Jogador)temp;
-                Jogadores.Add(jogador);
+                transicao.grade = grades[TransicaoMapas.SelectedIndex];
+                TransicaoEditor.Visibility = Visibility.Collapsed;
 
-                MessageBox.Show($"{jogador.Nome}");
-
-                PlayerNpcEditor.Visibility = Visibility.Collapsed;
-
+                Mouse.OverrideCursor = Cursors.Cross;
             }
-            if (temp.GetType() == typeof(Npc))
-            {
-                Npc npc = (Npc)temp;
-                Npcs.Add(npc);
-
-                MessageBox.Show($"{npc.Nome}");
-
-                PlayerNpcEditor.Visibility = Visibility.Collapsed;
-
-            }
-            if (temp.GetType() == typeof(Evento))
-            {
-                Evento evento = (Evento)temp;
-                Eventos.Add(evento);
-
-                MessageBox.Show($"{evento.Nome}: {evento.Descricao}");
-
-                EventEditor.Visibility = Visibility.Collapsed;
-            }
-            temp = null;
         }
 
         private void AdicionarEntidade_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -471,6 +597,13 @@ namespace RPGMapper
                         e.CanExecute = false;
                     }
                 }
+                else if (transicao != null)
+                {
+                    if (TransicaoMapas.SelectedIndex != tabControlMaps.SelectedIndex)
+                    {
+                        e.CanExecute = true;
+                    }
+                }
                 else
                 {
                     e.CanExecute = false;
@@ -490,6 +623,8 @@ namespace RPGMapper
 
             EnemyEditor.Visibility = Visibility.Collapsed;
             PlayerNpcEditor.Visibility = Visibility.Collapsed;
+            TransicaoEditor.Visibility = Visibility.Collapsed;
+            EventEditor.Visibility = Visibility.Collapsed;
         }
 
         private void CancelarEntidade_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -513,7 +648,7 @@ namespace RPGMapper
                     }
                 }
             }
-            if (entidade.GetType() == typeof(Jogador))
+            else if (entidade.GetType() == typeof(Jogador))
             {
                 for (int i = 1; i < Jogadores.Count; i++)
                 {
@@ -524,7 +659,7 @@ namespace RPGMapper
                     }
                 }
             }
-            if (entidade.GetType() == typeof(Npc))
+            else if (entidade.GetType() == typeof(Npc))
             {
                 for (int i = 1; i < Npcs.Count; i++)
                 {
@@ -535,7 +670,7 @@ namespace RPGMapper
                     }
                 }
             }
-            if (entidade.GetType() == typeof(Grade))
+            else if (entidade.GetType() == typeof(Grade))
             {
                 for (int i = 0; i < grades.Count; i++)
                 {
@@ -561,6 +696,225 @@ namespace RPGMapper
                     }
                 }
             }
+        }
+
+        private bool atualizando;
+        private void ResetarCbb(object sender, SelectionChangedEventArgs e)
+        {
+            if (atualizando) 
+            {
+                return;
+            }
+
+            atualizando = true;
+
+            var Cbb = sender as ComboBox;
+
+            if (Cbb != CbbEvento)
+            {
+                CbbEvento.SelectedIndex = 0;
+            }
+            if (Cbb != CbbInimigo)
+            {
+                CbbInimigo.SelectedIndex = 0;
+            }
+            if (Cbb != CbbJogador)
+            {
+                CbbJogador.SelectedIndex = 0;
+            }
+            if (Cbb != CbbNpc)
+            {
+                CbbNpc.SelectedIndex = 0;
+            }
+            atualizando = false;
+        }
+
+        private void Delete_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            var tile = e.Parameter as Tile;
+            if (tile == null)
+            {
+                try
+                {
+                    Point p = Mouse.GetPosition(MainGrid);
+                    HitTestResult result = VisualTreeHelper.HitTest(MainGrid, p);
+                    DependencyObject obj = result.VisualHit;
+                    while (obj != null && obj.GetType() != typeof(Grid))
+                    {
+                        obj = VisualTreeHelper.GetParent(obj);
+                    }
+                    Grid gradeTile = obj as Grid;
+                    tile = gradeTile.DataContext as Tile;
+                }
+                catch
+                {
+                    return;
+                }
+            }
+
+            tile.Entidade = null;
+        }
+
+        private void Delete_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            var tile = e.Parameter as Tile;
+            if (tile == null)
+            {
+                try
+                {
+                    Point p = Mouse.GetPosition(MainGrid);
+                    HitTestResult result = VisualTreeHelper.HitTest(MainGrid, p);
+                    DependencyObject obj = result.VisualHit;
+                    while (obj != null && obj.GetType() != typeof(Grid))
+                    {
+                        obj = VisualTreeHelper.GetParent(obj);
+                    }
+                    Grid gradeTile = obj as Grid;
+                    tile = gradeTile.DataContext as Tile;
+                }
+                catch
+                {
+                    return;
+                }
+            }
+
+            if (tile.Entidade != null)
+            {
+                e.CanExecute = true;
+            }
+            else
+            {
+                e.CanExecute = false;
+            }
+        }
+
+        private void Salvar_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            salvarDados();
+        }
+        private void SalvarComo_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            escolherCaminhoSave();
+            salvarDados();
+        }
+        private void Open_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            carregarArquivo();
+        }
+        private void Open_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+        private void Salvar_CanExecute(Object sender, CanExecuteRoutedEventArgs e)
+        {
+            if (grades.Count > 0)
+            {
+                e.CanExecute = true;
+            }
+            else { e.CanExecute = false; }
+        }
+
+        // Função para salvar os dados no arquivo
+        void salvarDados()
+        {
+            if (file == null)
+            {
+                escolherCaminhoSave();
+            }
+            try
+            {
+                Arquivo arquivo = new Arquivo(grades, Inimigos, Jogadores, Npcs, Eventos);
+                var json = JsonSerializer.Serialize(arquivo, new JsonSerializerOptions
+                {
+                    WriteIndented = true,
+                });
+
+                File.WriteAllText(file, json);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erro durante o salvamento\n{ex.Message}", "Erro", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        // Função para alterar o arquivo de salvamento
+        void escolherCaminhoSave()
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+
+            saveFileDialog.Filter = "Arquivo JSON (*.json)|*.json|Todos os arquivos(*.*)|*.*";
+            saveFileDialog.DefaultExt = "json";
+            saveFileDialog.FileName = "RpgMap";
+
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                file = saveFileDialog.FileName;
+            }
+        }
+        void escolherCaminhoOpen()
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+
+            openFileDialog.Filter = "Arquivo JSON (*.json)|*.json|Todos os arquivos(*.*)|*.*";
+            openFileDialog.DefaultExt = "json";
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                file = openFileDialog.FileName;
+            }
+        }
+
+        // Função para carregar um arquivo
+        void carregarArquivo()
+        {
+            escolherCaminhoOpen();
+            if (file != null)
+            {
+                try
+                {
+                    string json = File.ReadAllText(file);
+                    Arquivo arquivoCarregado = JsonSerializer.Deserialize<Arquivo>(json);
+                    
+                    grades = arquivoCarregado.Grades;
+                    Inimigos = arquivoCarregado.Inimigos;
+                    Jogadores = arquivoCarregado.Jogadores;
+                    Npcs = arquivoCarregado.Npcs;
+                    Eventos = arquivoCarregado.Eventos;
+
+                    grade = grades[0];
+
+                    this.DataContext = grade;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Erro durante o carregamento\n{ex.Message}", "Erro", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
+
+        private void AtivarEvento_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+        private void AtivarEvento_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+
+        }
+
+        private void AtivarTransicao_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+        private void AtivarTransicao_CanExecute(Object sender, CanExecuteRoutedEventArgs e)
+        {
+
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

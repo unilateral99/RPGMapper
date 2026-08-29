@@ -1,0 +1,125 @@
+{
+  "Grades": [
+    {
+      "Largura": 25,
+      "Altura": 25,
+      "Zoom": 1.5000000000000004,
+      "LarguraGrade": 937.50000000000023,
+      "AlturaGrade": 937.50000000000023,
+      "Imagem": "C:\\Users\\User\\Documents\\Projeto\\RPGMapper\\bin\\Debug\\Imagens\\1_Andar.png",
+      "Nome": "1_Andar"
+    },
+    {
+      "Largura": 25,
+      "Altura": 25,
+      "Zoom": 1.8000000000000007,
+      "LarguraGrade": 1125.0000000000005,
+      "AlturaGrade": 1125.0000000000005,
+      "Imagem": "C:\\Users\\User\\Documents\\Projeto\\RPGMapper\\bin\\Debug\\Imagens\\2_Andar.png",
+      "Nome": "2_Andar"
+    }
+  ],
+  "Inimigos": [
+    {
+      "Vida": 0,
+      "VidaAtual": 0,
+      "Id": 0,
+      "Imagem": "C:\\Users\\User\\Documents\\Projeto\\RPGMapper\\bin\\Debug\\\\Imagens\\espada.png",
+      "Nome": "Inimigos",
+      "Visivel": 0
+    },
+    {
+      "Vida": 0,
+      "VidaAtual": 0,
+      "Id": 0,
+      "Imagem": "C:\\Users\\User\\Documents\\Projeto\\RPGMapper\\bin\\Debug\\\\Imagens\\ADESIVO-9.png",
+      "Nome": "Goblin",
+      "Visivel": 0
+    }
+  ],
+  "Jogadores": [
+    {
+      "Iniciativa": 0,
+      "_nomeJogador": null,
+      "idJogador": 0,
+      "NomeJogador": null,
+      "Id": 0,
+      "Imagem": "C:\\Users\\User\\Documents\\Projeto\\RPGMapper\\bin\\Debug\\\\Imagens\\controle.png",
+      "Nome": "Jogadores",
+      "Visivel": 0
+    },
+    {
+      "Iniciativa": 0,
+      "_nomeJogador": null,
+      "idJogador": 0,
+      "NomeJogador": null,
+      "Id": 0,
+      "Imagem": "C:\\Users\\User\\Documents\\Projeto\\RPGMapper\\bin\\Debug\\\\Imagens\\Sebastiao.jpg",
+      "Nome": "Sebasti\u00E3o",
+      "Visivel": 0
+    }
+  ],
+  "Npcs": [
+    {
+      "Id": 0,
+      "Imagem": "C:\\Users\\User\\Documents\\Projeto\\RPGMapper\\bin\\Debug\\\\Imagens\\homem.png",
+      "Nome": "Npcs",
+      "Visivel": 0
+    }
+  ],
+  "Eventos": [
+    {
+      "Descricao": null,
+      "Id": 0,
+      "Imagem": "C:\\Users\\User\\Documents\\Projeto\\RPGMapper\\bin\\Debug\\\\Imagens\\EventFlag.png",
+      "Nome": "Eventos",
+      "Visivel": 0
+    },
+    {
+      "Descricao": "Buraco",
+      "Id": 0,
+      "Imagem": "C:\\Users\\User\\Documents\\Projeto\\RPGMapper\\bin\\Debug\\\\Imagens\\EventFlag.png",
+      "Nome": "Buraco",
+      "Visivel": 0
+    }
+  ],
+  "TileEntidades": [
+    [
+      {
+        "Entidade": {
+          "Id": 0,
+          "Imagem": "C:\\Users\\User\\Documents\\Projeto\\RPGMapper\\bin\\Debug\\\\Imagens\\ADESIVO-9.png",
+          "Nome": "Goblin",
+          "Visivel": 0
+        },
+        "x": 13,
+        "y": 10,
+        "numero": 335
+      },
+      {
+        "Entidade": {
+          "Id": 0,
+          "Imagem": "C:\\Users\\User\\Documents\\Projeto\\RPGMapper\\bin\\Debug\\\\Imagens\\EventFlag.png",
+          "Nome": "Buraco",
+          "Visivel": 0
+        },
+        "x": 20,
+        "y": 11,
+        "numero": 511
+      }
+    ],
+    [
+      {
+        "Entidade": {
+          "Id": 0,
+          "Imagem": "C:\\Users\\User\\Documents\\Projeto\\RPGMapper\\bin\\Debug\\\\Imagens\\ADESIVO-9.png",
+          "Nome": "Goblin",
+          "Visivel": 0
+        },
+        "x": 12,
+        "y": 5,
+        "numero": 305
+      }
+    ]
+  ]
+}

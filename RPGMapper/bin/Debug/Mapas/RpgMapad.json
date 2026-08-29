@@ -1,0 +1,87 @@
+{
+  "Grades": [
+    {
+      "Altura": 50,
+      "Largura": 50,
+      "AlturaGrade": 1250,
+      "LarguraGrade": 1250,
+      "Zoom": 1,
+      "Imagem": "C:\\Users\\aluno\\Pictures\\Wallpaper 2022 v4.jpg",
+      "Nome": "Wallpaper 2022 v4"
+    }
+  ],
+  "Inimigos": [
+    {
+      "Vida": 0,
+      "VidaAtual": 0,
+      "Id": 0,
+      "Localizacao": null,
+      "Imagem": "C:\\Users\\aluno\\Downloads\\RPGMapper-20260819T214724Z-1-001\\RPGMapper\\bin\\Debug\\\\Imagens\\espada.png",
+      "Nome": "Inimigos",
+      "Visivel": 0
+    },
+    {
+      "Vida": 2,
+      "VidaAtual": 2,
+      "Id": 0,
+      "Localizacao": null,
+      "Imagem": "C:\\Users\\aluno\\Downloads\\RPGMapper-20260819T214724Z-1-001\\RPGMapper\\bin\\Debug\\\\Imagens\\ADESIVO-9.png",
+      "Nome": "asd",
+      "Visivel": 0
+    }
+  ],
+  "Jogadores": [
+    {
+      "Iniciativa": 0,
+      "_nomeJogador": null,
+      "NomeJogador": null,
+      "Id": 0,
+      "Localizacao": null,
+      "Imagem": "C:\\Users\\aluno\\Downloads\\RPGMapper-20260819T214724Z-1-001\\RPGMapper\\bin\\Debug\\\\Imagens\\controle.png",
+      "Nome": "Jogadores",
+      "Visivel": 0
+    },
+    {
+      "Iniciativa": 0,
+      "_nomeJogador": null,
+      "NomeJogador": null,
+      "Id": 0,
+      "Localizacao": null,
+      "Imagem": "C:\\Users\\aluno\\Downloads\\RPGMapper-20260819T214724Z-1-001\\RPGMapper\\bin\\Debug\\\\Imagens\\Sebastiao.jpg",
+      "Nome": "aaa",
+      "Visivel": 0
+    },
+    {
+      "Iniciativa": 0,
+      "_nomeJogador": null,
+      "NomeJogador": null,
+      "Id": 0,
+      "Localizacao": null,
+      "Imagem": "C:\\Users\\aluno\\Downloads\\RPGMapper-20260819T214724Z-1-001\\RPGMapper\\bin\\Debug\\\\Imagens\\Sebastiao.jpg",
+      "Nome": "vvvv",
+      "Visivel": 0
+    }
+  ],
+  "Npcs": [
+    {
+      "Id": 0,
+      "Localizacao": null,
+      "Imagem": "C:\\Users\\aluno\\Downloads\\RPGMapper-20260819T214724Z-1-001\\RPGMapper\\bin\\Debug\\\\Imagens\\homem.png",
+      "Nome": "Npcs",
+      "Visivel": 0
+    }
+  ],
+  "Eventos": [
+    {
+      "Descricao": null,
+      "Id": 0,
+      "Localizacao": null,
+      "Imagem": "C:\\Users\\aluno\\Downloads\\RPGMapper-20260819T214724Z-1-001\\RPGMapper\\bin\\Debug\\\\Imagens\\EventFlag.png",
+      "Nome": "Eventos",
+      "Visivel": 0
+    }
+  ],
+  "TileEntidades": [
+    []
+  ]
+}

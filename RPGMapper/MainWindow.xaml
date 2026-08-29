@@ -14,14 +14,21 @@
 
     <Window.CommandBindings>
         <CommandBinding Command="ApplicationCommands.New" Executed="Novo_Executed" CanExecute="Novo_CanExecute"/>
+        <CommandBinding Command="ApplicationCommands.Save" Executed="Salvar_Executed" CanExecute="Salvar_CanExecute"/>
+        <CommandBinding Command="ApplicationCommands.SaveAs" Executed="SalvarComo_Executed" CanExecute="Salvar_CanExecute"/>
+        <CommandBinding Command="ApplicationCommands.Open" Executed="Open_Executed" CanExecute="Open_CanExecute"/>
+        <CommandBinding Command="ApplicationCommands.Delete" Executed="Delete_Executed" CanExecute="Delete_CanExecute"/>
         <CommandBinding Command="local:MyCommands.Inimigo" Executed="Inimigo_Executed" CanExecute="Adicionar_CanExecute"/>
         <CommandBinding Command="local:MyCommands.Jogador" Executed="Jogador_Executed" CanExecute="Adicionar_CanExecute"/>
         <CommandBinding Command="local:MyCommands.Npc" Executed="Npc_Executed" CanExecute="Adicionar_CanExecute"/>
-        <CommandBinding Command="local:MyCommands.Mapa" Executed="Mapa_Executed" CanExecute="Adicionar_CanExecute"/>
+        <CommandBinding Command="local:MyCommands.Mapa" Executed="Mapa_Executed" CanExecute="Mapa_CanExecute"/>
         <CommandBinding Command="local:MyCommands.Evento" Executed="Evento_Executed" CanExecute="Adicionar_CanExecute"/>
+        <CommandBinding Command="local:MyCommands.Transicao" Executed="Transicao_Executed" CanExecute="Transicao_CanExecute"/>
         <CommandBinding Command="local:MyCommands.Imagem" Executed="Imagem_Executed" CanExecute="Imagem_CanExecute"/>
         <CommandBinding Command="local:MyCommands.AdicionarEntidade" Executed="AdicionarEntidade_Executed" CanExecute="AdicionarEntidade_CanExecute"/>
         <CommandBinding Command="local:MyCommands.CancelarEntidade" Executed="CancelarEntidade_Executed" CanExecute="CancelarEntidade_CanExecute"/>
+        <CommandBinding Command="local:MyCommands.AtivarEvento" Executed="AtivarEvento_Executed" CanExecute="AtivarEvento_CanExecute"/>
+        <CommandBinding Command="local:MyCommands.AtivarTransicao" Executed="AtivarTransicao_Executed" CanExecute="AtivarTransicao_CanExecute"/>
     </Window.CommandBindings>
     
     <Window.Resources>
@@ -46,19 +53,20 @@
             <Menu Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
                 <MenuItem Header="Arquivo">
                     <MenuItem Command="ApplicationCommands.New" Header="Novo"/>
-                    <MenuItem Header="Abrir projeto"/>
-                    <MenuItem Header="Abrir Imagem"/>
+                    <MenuItem Command="ApplicationCommands.Open" Header="Abrir projeto"/>
 
                     <Separator/>
-                    <MenuItem Header="Salvar"/>
-                    <MenuItem Header="Salvar Como"/>
+                    <MenuItem Command="ApplicationCommands.Save" Header="Salvar"/>
+                    <MenuItem Command="ApplicationCommands.SaveAs" Header="Salvar Como"/>
                 </MenuItem>
 
                 <MenuItem Header="Adicionar">
-                    <MenuItem Command="local:MyCommands.Inimigo" Header="Inimigo"/>
-                    <MenuItem Command="local:MyCommands.Jogador" Header="Jogador"/>
-                    <MenuItem Command="local:MyCommands.Npc" Header="Npc"/>
+                    <MenuItem Command="local:MyCommands.Inimigo"/>
+                    <MenuItem Command="local:MyCommands.Jogador"/>
+                    <MenuItem Command="local:MyCommands.Npc"/>
                     <MenuItem Command="local:MyCommands.Mapa"/>
+                    <MenuItem Command="local:MyCommands.Evento"/>
+                    <MenuItem Command="local:MyCommands.Transicao"/>
                 </MenuItem>
             </Menu>
 
@@ -87,7 +95,7 @@
                     <TextBox Name="txtBox_Altura" Text="{Binding Altura, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Width="40" ToolTip="Altura em Tiles"/>
                     <Separator/>
 
-                    <ComboBox Name="CbbInimigo" ItemsSource="{Binding Inimigos}" Width="100" SelectedItem="{Binding inimigoSelecionado, Mode=OneWayToSource}">
+                    <ComboBox SelectionChanged="ResetarCbb"  Name="CbbInimigo" ItemsSource="{Binding Inimigos}" Width="100" SelectedItem="{Binding inimigoSelecionado, Mode=OneWayToSource}">
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
@@ -99,7 +107,7 @@
                         </ComboBox.ItemTemplate>
                     </ComboBox>
 
-                    <ComboBox Name="CbbJogador" ItemsSource="{Binding Jogadores}" Width="100" SelectedItem="{Binding jogadorSelecionado, Mode=OneWayToSource}">
+                    <ComboBox SelectionChanged="ResetarCbb" Name="CbbJogador" ItemsSource="{Binding Jogadores}" Width="100" SelectedItem="{Binding jogadorSelecionado, Mode=OneWayToSource}">
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
@@ -111,7 +119,7 @@
                         </ComboBox.ItemTemplate>
                     </ComboBox>
 
-                    <ComboBox Name="CbbNpc" ItemsSource="{Binding Npcs}" Width="100" SelectedItem="{Binding npcSelecionado, Mode=OneWayToSource}">
+                    <ComboBox SelectionChanged="ResetarCbb" Name="CbbNpc" ItemsSource="{Binding Npcs}" Width="100" SelectedItem="{Binding npcSelecionado, Mode=OneWayToSource}">
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
@@ -123,7 +131,7 @@
                         </ComboBox.ItemTemplate>
                     </ComboBox>
 
-                    <ComboBox Name="CbbEvento" ItemsSource="{Binding Eventos}" Width="100" SelectedItem="{Binding eventoSelecionado, Mode=OneWayToSource}">
+                    <ComboBox SelectionChanged="ResetarCbb" Name="CbbEvento" ItemsSource="{Binding Eventos}" Width="100" SelectedItem="{Binding eventoSelecionado, Mode=OneWayToSource}">
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
@@ -142,11 +150,11 @@
                 <ToolBar Background="AntiqueWhite">
                     <TextBlock Text="Adicionar:" Margin="0,0,0,10" Background="AntiqueWhite"/>
                     <Button Content="Inimigo" Command="local:MyCommands.Inimigo" Background="AntiqueWhite" ToolTip="Cria um molde de um Inimigo que pode ser colocado no mapa.&#10;Aparece na caixa 'Inimigos'."/>
-                    <Button Content="Jogador" Command="local:MyCommands.Jogador" Background="AntiqueWhite" ToolTip="Cria um molde de um Jogador que pode ser colocado no mapa&#10;Aparece na caixa 'Jogadores'&#10;Só pode ter um de cada jogador no mapa, e essa será a posição inicial na partida"/>
-                    <Button Content="NPC" Command="local:MyCommands.Npc" Background="AntiqueWhite"/>
-                    <Button Content="Evento" Command="local:MyCommands.Evento" Background="AntiqueWhite"/>
-                    <Button Command="local:MyCommands.Mapa" Content="Mapa" Background="AntiqueWhite"/>
-                    <Button Content="Transição" Background="AntiqueWhite"/>
+                    <Button Content="Jogador" Command="local:MyCommands.Jogador" Background="AntiqueWhite" ToolTip="Cria um molde de um Jogador que pode ser colocado no mapa.&#10;Aparece na caixa 'Jogadores'.&#10;Só pode ter um de cada jogador no mapa.&#10;A partida pode começar com uma localização inicial dos jogadores ou eles podem ser introduzidos durante o jogo."/>
+                    <Button Content="NPC" Command="local:MyCommands.Npc" Background="AntiqueWhite" ToolTip="Cria um molde de um Npc que pode ser colocado no mapa&#10;Aparece na caixa 'Npcs'."/>
+                    <Button Content="Evento" Command="local:MyCommands.Evento" Background="AntiqueWhite" ToolTip="Cria um molde de um Evento que pode ser colocado no mapa.&#10;Os jogadores não podem ver o ícone do evento a não ser que você o ative durante o jogo.&#10;Ex: Um buraco, uma emboscada, etc.&#10;Aparece na caixa Eventos."/>
+                    <Button Content="Mapa" Command="local:MyCommands.Mapa" Background="AntiqueWhite" ToolTip="Adiciona um mapa com suas propriedades que pode ser trocado durante a partida."/>
+                    <Button Content="Transição" Command="local:MyCommands.Transicao" Background="AntiqueWhite" ToolTip="Adiciona uma transição para trocar de mapa rapidamente durante o jogo, como uma porta ou escada&#10;Os jogadores não podem ver os pontos de transição."/>
                 </ToolBar>
             </ToolBarTray>
 
@@ -165,7 +173,7 @@
             <ScrollViewer PreviewMouseWheel="PreviewMouseWheel_ScrollViewer" Grid.Column="0" Grid.Row="3" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Background="Black">
                 <Grid x:Name="GradeGrid" Width="{Binding LarguraGrade}" Height="{Binding AlturaGrade}">
 
-                    <Button Command="ApplicationCommands.New" Content="Abrir imagem" Width="100" Height="30"/>
+                    <Button Name="StartButton" Command="local:MyCommands.Mapa" Content="Abrir imagem" Width="100" Height="30" Visibility="Visible"/>
                     <Image Source="{Binding Imagem}" Stretch="Fill"/>
 
                     <ItemsControl Name="gradeIC">
@@ -178,6 +186,15 @@
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <Grid MouseDown="Tile_Click">
+                                    <Grid.ContextMenu>
+                                        <ContextMenu>
+                                            <MenuItem Command="ApplicationCommands.Delete"
+                                                      CommandParameter="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
+                                                      Header="Deletar"/>
+                                            <MenuItem Header="Ativar evento"/>
+                                            <MenuItem Header="Ativar transição"/>
+                                        </ContextMenu>
+                                    </Grid.ContextMenu>
                                     <TextBlock/>
                                     <Image Name="EntidadeImagem" MouseMove="EntidadeImagem_MouseMove" MouseUp="EntidadeImagem_MouseUp"  DataContext="{Binding Entidade}" Source="{Binding Imagem}"/>
                                     <Border BorderBrush="Black" BorderThickness="0.20"/>
@@ -248,10 +265,10 @@
             <Border Background="SandyBrown" BorderBrush="SaddleBrown" BorderThickness="5" Width="400" Height="400">
                 <Border.Effect>
                     <DropShadowEffect BlurRadius="10"
-                  ShadowDepth="3"
-                  Direction="315"
-                  Color="Black"
-                  Opacity="0.7"/>
+                                      ShadowDepth="3"
+                                      Direction="315"
+                                      Color="Black"
+                                      Opacity="0.7"/>
                 </Border.Effect>
 
                 <Canvas>
@@ -301,6 +318,32 @@
                     </Canvas>
                 </Border>
             </Canvas>
+        </Grid>
+
+        <Grid Name="TransicaoEditor" Visibility="Collapsed">
+            <Border Background="SandyBrown" BorderBrush="SaddleBrown" BorderThickness="5" Width="300" Height="150">
+                <Border.Effect>
+                    <DropShadowEffect BlurRadius="10"
+                                      ShadowDepth="3"
+                                      Direction="315"
+                                      Color="Black"
+                                      Opacity="0.7"/>
+                </Border.Effect>
+                <Canvas>
+                    <TextBlock Text="Mapa destino:" FontSize="15" Canvas.Top="30" Canvas.Left="20"/>
+                    <ComboBox Name="TransicaoMapas" ItemsSource="{Binding grades}" Width="150" Canvas.Top="30" Canvas.Right="20">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Nome}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+
+                    <Button Command="local:MyCommands.AdicionarEntidade" Content="Adicionar" Width="100" Height="30" Canvas.Bottom="20" Canvas.Right="20"/>
+                    <Button Command="local:MyCommands.CancelarEntidade" Content="Cancelar" Width="100" Height="30" Canvas.Bottom="20" Canvas.Left="20"/>
+
+                </Canvas>
+               </Border>
         </Grid>
     </Grid>
 </Window>

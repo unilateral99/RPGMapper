@@ -1,0 +1,83 @@
+{
+  "Grades": [
+    {
+      "Altura": 50,
+      "Largura": 50,
+      "AlturaGrade": 1250,
+      "LarguraGrade": 1250,
+      "Zoom": 1,
+      "Imagem": "C:\\Users\\User\\Documents\\Projeto\\RPGMapper\\bin\\Debug\\Imagens\\1_Andar.png",
+      "Nome": "1_Andar"
+    },
+    {
+      "Altura": 50,
+      "Largura": 50,
+      "AlturaGrade": 1250,
+      "LarguraGrade": 1250,
+      "Zoom": 1,
+      "Imagem": "C:\\Users\\User\\Documents\\Projeto\\RPGMapper\\bin\\Debug\\Imagens\\2_Andar.png",
+      "Nome": "2_Andar"
+    }
+  ],
+  "Inimigos": [
+    {
+      "Vida": 0,
+      "VidaAtual": 0,
+      "Id": 0,
+      "Imagem": "C:\\Users\\User\\Documents\\Projeto\\RPGMapper\\bin\\Debug\\\\Imagens\\espada.png",
+      "Nome": "Inimigos",
+      "Visivel": 0
+    },
+    {
+      "Vida": 12,
+      "VidaAtual": 12,
+      "Id": 0,
+      "Imagem": "C:\\Users\\User\\Documents\\Projeto\\RPGMapper\\bin\\Debug\\\\Imagens\\ADESIVO-9.png",
+      "Nome": "Pedro",
+      "Visivel": 0
+    }
+  ],
+  "Jogadores": [
+    {
+      "Iniciativa": 0,
+      "_nomeJogador": null,
+      "idJogador": 0,
+      "NomeJogador": null,
+      "Id": 0,
+      "Imagem": "C:\\Users\\User\\Documents\\Projeto\\RPGMapper\\bin\\Debug\\\\Imagens\\controle.png",
+      "Nome": "Jogadores",
+      "Visivel": 0
+    },
+    {
+      "Iniciativa": 0,
+      "_nomeJogador": null,
+      "idJogador": 0,
+      "NomeJogador": null,
+      "Id": 0,
+      "Imagem": "C:\\Users\\User\\Documents\\Projeto\\RPGMapper\\bin\\Debug\\\\Imagens\\Sebastiao.jpg",
+      "Nome": "Sebasti\u00E3o",
+      "Visivel": 0
+    }
+  ],
+  "Npcs": [
+    {
+      "Id": 0,
+      "Imagem": "C:\\Users\\User\\Documents\\Projeto\\RPGMapper\\bin\\Debug\\\\Imagens\\homem.png",
+      "Nome": "Npcs",
+      "Visivel": 0
+    }
+  ],
+  "Eventos": [
+    {
+      "Descricao": null,
+      "Id": 0,
+      "Imagem": "C:\\Users\\User\\Documents\\Projeto\\RPGMapper\\bin\\Debug\\\\Imagens\\EventFlag.png",
+      "Nome": "Eventos",
+      "Visivel": 0
+    }
+  ],
+  "TileEntidades": [
+    [],
+    []
+  ]
+}

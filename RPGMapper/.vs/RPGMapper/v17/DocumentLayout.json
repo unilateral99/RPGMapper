@@ -1,0 +1,227 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\aluno\\Downloads\\RPGMapper-20260820T213755Z-1-001\\RPGMapper\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{86130578-D4CE-4F6E-8E23-6CCEF7D23844}|RPGMapper.csproj|C:\\Users\\aluno\\Downloads\\RPGMapper-20260820T213755Z-1-001\\RPGMapper\\entidades.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{86130578-D4CE-4F6E-8E23-6CCEF7D23844}|RPGMapper.csproj|solutionrelative:entidades.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{86130578-D4CE-4F6E-8E23-6CCEF7D23844}|RPGMapper.csproj|c:\\users\\aluno\\downloads\\rpgmapper-20260820t213755z-1-001\\rpgmapper\\classes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{86130578-D4CE-4F6E-8E23-6CCEF7D23844}|RPGMapper.csproj|solutionrelative:classes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{86130578-D4CE-4F6E-8E23-6CCEF7D23844}|RPGMapper.csproj|C:\\Users\\aluno\\Downloads\\RPGMapper-20260820T213755Z-1-001\\RPGMapper\\teladejogomestre.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{86130578-D4CE-4F6E-8E23-6CCEF7D23844}|RPGMapper.csproj|solutionrelative:teladejogomestre.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{86130578-D4CE-4F6E-8E23-6CCEF7D23844}|RPGMapper.csproj|C:\\Users\\aluno\\Downloads\\RPGMapper-20260820T213755Z-1-001\\RPGMapper\\menuprincipal.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{86130578-D4CE-4F6E-8E23-6CCEF7D23844}|RPGMapper.csproj|solutionrelative:menuprincipal.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{86130578-D4CE-4F6E-8E23-6CCEF7D23844}|RPGMapper.csproj|C:\\Users\\aluno\\Downloads\\RPGMapper-20260820T213755Z-1-001\\RPGMapper\\sala.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{86130578-D4CE-4F6E-8E23-6CCEF7D23844}|RPGMapper.csproj|solutionrelative:sala.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{86130578-D4CE-4F6E-8E23-6CCEF7D23844}|RPGMapper.csproj|C:\\Users\\aluno\\Downloads\\RPGMapper-20260820T213755Z-1-001\\RPGMapper\\teladejogomestre.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{86130578-D4CE-4F6E-8E23-6CCEF7D23844}|RPGMapper.csproj|solutionrelative:teladejogomestre.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{86130578-D4CE-4F6E-8E23-6CCEF7D23844}|RPGMapper.csproj|C:\\Users\\aluno\\Downloads\\RPGMapper-20260820T213755Z-1-001\\RPGMapper\\teladejogojogador.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{86130578-D4CE-4F6E-8E23-6CCEF7D23844}|RPGMapper.csproj|solutionrelative:teladejogojogador.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{86130578-D4CE-4F6E-8E23-6CCEF7D23844}|RPGMapper.csproj|C:\\Users\\aluno\\Downloads\\RPGMapper-20260820T213755Z-1-001\\RPGMapper\\editordemapa.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{86130578-D4CE-4F6E-8E23-6CCEF7D23844}|RPGMapper.csproj|solutionrelative:editordemapa.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{86130578-D4CE-4F6E-8E23-6CCEF7D23844}|RPGMapper.csproj|C:\\Users\\aluno\\Downloads\\RPGMapper-20260820T213755Z-1-001\\RPGMapper\\sala.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{86130578-D4CE-4F6E-8E23-6CCEF7D23844}|RPGMapper.csproj|solutionrelative:sala.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{86130578-D4CE-4F6E-8E23-6CCEF7D23844}|RPGMapper.csproj|C:\\Users\\aluno\\Downloads\\RPGMapper-20260820T213755Z-1-001\\RPGMapper\\teladejogojogador.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{86130578-D4CE-4F6E-8E23-6CCEF7D23844}|RPGMapper.csproj|solutionrelative:teladejogojogador.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{86130578-D4CE-4F6E-8E23-6CCEF7D23844}|RPGMapper.csproj|C:\\Users\\aluno\\Downloads\\RPGMapper-20260820T213755Z-1-001\\RPGMapper\\editordemapa.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{86130578-D4CE-4F6E-8E23-6CCEF7D23844}|RPGMapper.csproj|solutionrelative:editordemapa.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{86130578-D4CE-4F6E-8E23-6CCEF7D23844}|RPGMapper.csproj|C:\\Users\\aluno\\Downloads\\RPGMapper-20260820T213755Z-1-001\\RPGMapper\\menuprincipal.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{86130578-D4CE-4F6E-8E23-6CCEF7D23844}|RPGMapper.csproj|solutionrelative:menuprincipal.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{86130578-D4CE-4F6E-8E23-6CCEF7D23844}|RPGMapper.csproj|C:\\Users\\aluno\\Downloads\\RPGMapper-20260820T213755Z-1-001\\RPGMapper\\mycommands.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{86130578-D4CE-4F6E-8E23-6CCEF7D23844}|RPGMapper.csproj|solutionrelative:mycommands.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 9,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Classes.cs",
+              "DocumentMoniker": "C:\\Users\\aluno\\Downloads\\RPGMapper-20260820T213755Z-1-001\\RPGMapper\\Classes.cs",
+              "RelativeDocumentMoniker": "Classes.cs",
+              "ToolTip": "C:\\Users\\aluno\\Downloads\\RPGMapper-20260820T213755Z-1-001\\RPGMapper\\Classes.cs",
+              "RelativeToolTip": "Classes.cs",
+              "ViewState": "AQIAABkAAAAAAAAAAAAowCIAAAAUAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-03T21:39:11.758Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "TelaDeJogoMestre.xaml",
+              "DocumentMoniker": "C:\\Users\\aluno\\Downloads\\RPGMapper-20260820T213755Z-1-001\\RPGMapper\\TelaDeJogoMestre.xaml",
+              "RelativeDocumentMoniker": "TelaDeJogoMestre.xaml",
+              "ToolTip": "C:\\Users\\aluno\\Downloads\\RPGMapper-20260820T213755Z-1-001\\RPGMapper\\TelaDeJogoMestre.xaml",
+              "RelativeToolTip": "TelaDeJogoMestre.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-08-17T22:04:47.933Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "TelaDeJogoMestre.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\aluno\\Downloads\\RPGMapper-20260820T213755Z-1-001\\RPGMapper\\TelaDeJogoMestre.xaml.cs",
+              "RelativeDocumentMoniker": "TelaDeJogoMestre.xaml.cs",
+              "ToolTip": "C:\\Users\\aluno\\Downloads\\RPGMapper-20260820T213755Z-1-001\\RPGMapper\\TelaDeJogoMestre.xaml.cs",
+              "RelativeToolTip": "TelaDeJogoMestre.xaml.cs",
+              "ViewState": "AQIAAJYAAAAAAAAAAAAkwOoAAAAjAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-17T22:08:03.111Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "TelaDeJogoJogador.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\aluno\\Downloads\\RPGMapper-20260820T213755Z-1-001\\RPGMapper\\TelaDeJogoJogador.xaml.cs",
+              "RelativeDocumentMoniker": "TelaDeJogoJogador.xaml.cs",
+              "ToolTip": "C:\\Users\\aluno\\Downloads\\RPGMapper-20260820T213755Z-1-001\\RPGMapper\\TelaDeJogoJogador.xaml.cs",
+              "RelativeToolTip": "TelaDeJogoJogador.xaml.cs",
+              "ViewState": "AQIAABMAAAAAAAAAAAAUwHYAAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-17T22:08:20.819Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "TelaDeJogoJogador.xaml",
+              "DocumentMoniker": "C:\\Users\\aluno\\Downloads\\RPGMapper-20260820T213755Z-1-001\\RPGMapper\\TelaDeJogoJogador.xaml",
+              "RelativeDocumentMoniker": "TelaDeJogoJogador.xaml",
+              "ToolTip": "C:\\Users\\aluno\\Downloads\\RPGMapper-20260820T213755Z-1-001\\RPGMapper\\TelaDeJogoJogador.xaml",
+              "RelativeToolTip": "TelaDeJogoJogador.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-08-17T22:03:50.704Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Sala.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\aluno\\Downloads\\RPGMapper-20260820T213755Z-1-001\\RPGMapper\\Sala.xaml.cs",
+              "RelativeDocumentMoniker": "Sala.xaml.cs",
+              "ToolTip": "C:\\Users\\aluno\\Downloads\\RPGMapper-20260820T213755Z-1-001\\RPGMapper\\Sala.xaml.cs",
+              "RelativeToolTip": "Sala.xaml.cs",
+              "ViewState": "AQIAAC8AAAAAAAAAAAA5wEAAAAB1AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-10T23:26:13.078Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Sala.xaml",
+              "DocumentMoniker": "C:\\Users\\aluno\\Downloads\\RPGMapper-20260820T213755Z-1-001\\RPGMapper\\Sala.xaml",
+              "RelativeDocumentMoniker": "Sala.xaml",
+              "ToolTip": "C:\\Users\\aluno\\Downloads\\RPGMapper-20260820T213755Z-1-001\\RPGMapper\\Sala.xaml",
+              "RelativeToolTip": "Sala.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-08-10T21:58:10.801Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "MenuPrincipal.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\aluno\\Downloads\\RPGMapper-20260820T213755Z-1-001\\RPGMapper\\MenuPrincipal.xaml.cs",
+              "RelativeDocumentMoniker": "MenuPrincipal.xaml.cs",
+              "ToolTip": "C:\\Users\\aluno\\Downloads\\RPGMapper-20260820T213755Z-1-001\\RPGMapper\\MenuPrincipal.xaml.cs",
+              "RelativeToolTip": "MenuPrincipal.xaml.cs",
+              "ViewState": "AQIAAD8AAAAAAAAAAAAQwCgAAABQAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-05T23:45:07.572Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "MenuPrincipal.xaml",
+              "DocumentMoniker": "C:\\Users\\aluno\\Downloads\\RPGMapper-20260820T213755Z-1-001\\RPGMapper\\MenuPrincipal.xaml",
+              "RelativeDocumentMoniker": "MenuPrincipal.xaml",
+              "ToolTip": "C:\\Users\\aluno\\Downloads\\RPGMapper-20260820T213755Z-1-001\\RPGMapper\\MenuPrincipal.xaml",
+              "RelativeToolTip": "MenuPrincipal.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-08-05T22:31:21.292Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Entidades.cs",
+              "DocumentMoniker": "C:\\Users\\aluno\\Downloads\\RPGMapper-20260820T213755Z-1-001\\RPGMapper\\Entidades.cs",
+              "RelativeDocumentMoniker": "Entidades.cs",
+              "ToolTip": "C:\\Users\\aluno\\Downloads\\RPGMapper-20260820T213755Z-1-001\\RPGMapper\\Entidades.cs",
+              "RelativeToolTip": "Entidades.cs",
+              "ViewState": "AQIAAA4AAAAAAAAAAAAEwCgAAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-03T21:38:54.317Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "MyCommands.cs",
+              "DocumentMoniker": "C:\\Users\\aluno\\Downloads\\RPGMapper-20260820T213755Z-1-001\\RPGMapper\\MyCommands.cs",
+              "RelativeDocumentMoniker": "MyCommands.cs",
+              "ToolTip": "C:\\Users\\aluno\\Downloads\\RPGMapper-20260820T213755Z-1-001\\RPGMapper\\MyCommands.cs",
+              "RelativeToolTip": "MyCommands.cs",
+              "ViewState": "AQIAACEAAAAAAAAAAAAkwEQAAABoAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-03T21:33:35.345Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "EditorDeMapa.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\aluno\\Downloads\\RPGMapper-20260820T213755Z-1-001\\RPGMapper\\EditorDeMapa.xaml.cs",
+              "RelativeDocumentMoniker": "EditorDeMapa.xaml.cs",
+              "ToolTip": "C:\\Users\\aluno\\Downloads\\RPGMapper-20260820T213755Z-1-001\\RPGMapper\\EditorDeMapa.xaml.cs",
+              "RelativeToolTip": "EditorDeMapa.xaml.cs",
+              "ViewState": "AQIAAP0AAAAAAAAAAAAmwMAAAAAeAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-05T22:01:49.222Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "EditorDeMapa.xaml",
+              "DocumentMoniker": "C:\\Users\\aluno\\Downloads\\RPGMapper-20260820T213755Z-1-001\\RPGMapper\\EditorDeMapa.xaml",
+              "RelativeDocumentMoniker": "EditorDeMapa.xaml",
+              "ToolTip": "C:\\Users\\aluno\\Downloads\\RPGMapper-20260820T213755Z-1-001\\RPGMapper\\EditorDeMapa.xaml",
+              "RelativeToolTip": "EditorDeMapa.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-08-03T21:32:28.034Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
